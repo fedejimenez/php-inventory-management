@@ -4,10 +4,10 @@
 
   require_once("../models/Category.php");
 
-  // require_once("../models/Product.php")
+  require_once("../models/Product.php");
 
 
-  // $products = new Product();
+  $products = new Product();
   $categories = new Category();
 
   // declare variables, attrib "name" from the form fields
@@ -110,6 +110,9 @@
       $data=$categories->get_category_by_id($_POST["id_category"]);
       if(is_array($data)==true and count($data)>0){
         $categories->change_status($_POST["id_category"],$_POST["status"]);
+        
+        // change status of the products under the same category
+        $products->edit_status_by_category($_POST["id_category"], $_POST["status"]);
       } 
       break;
 
