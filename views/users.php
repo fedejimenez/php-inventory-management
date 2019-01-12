@@ -23,7 +23,7 @@
                   <div class="box">
                     <div class="box-header with-border">
                         <h1 class="box-title">
-                          <button class="btn btn-primary btn-lg" id="add_button" onclick="clear()" data-toggle="modal" data-target="#userModal"><i class="fa fa-plus" aria-hidden="true"></i> New User</button>
+                          <button class="btn btn-primary btn-lg" id="add_button" onclick="clearUser()" data-toggle="modal" data-target="#userModal"><i class="fa fa-plus" aria-hidden="true"></i> New User</button>
                         </h1>
                         <div class="box-tools pull-right">
                         </div>
@@ -133,7 +133,7 @@
 
             <button type="submit" name="action" id="btnSave" class="btn btn-success pull-left" value="Add"><i class="fa fa-floppy-o" aria-hidden="true"></i>Save</button>
 
-            <button type="button" onclick="clear()" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i>Close</button>
+            <button type="button" onclick="clearUser()" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i>Close</button>
           
           </div>
 

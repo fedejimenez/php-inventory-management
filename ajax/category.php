@@ -139,7 +139,7 @@
                 
       $sub_array[] = '<button type="button" onClick="showCategory('.$row["id_category"].');"  id="'.$row["id_category"].'" class="btn btn-warning btn-md update"><i class="glyphicon glyphicon-edit"></i> Edit</button>';
 
-      $sub_array[] = '<button type="button" onClick="delete('.$row["id_category"].');"  id="'.$row["id_category"].'" class="btn btn-danger btn-md"><i class="glyphicon glyphicon-edit"></i> Delete</button>';
+      $sub_array[] = '<button type="button" onClick="deleteCategory('.$row["id_category"].');"  id="'.$row["id_category"].'" class="btn btn-danger btn-md"><i class="glyphicon glyphicon-edit"></i> Delete</button>';
       
       $array[] = $sub_array;
 

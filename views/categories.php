@@ -23,7 +23,7 @@
                   <div class="box">
                     <div class="box-header with-border">
                         <h1 class="box-title">
-                          <button class="btn btn-primary btn-lg" id="add_button" onclick="clear()" data-toggle="modal" data-target="#categoryModal"><i class="fa fa-plus" aria-hidden="true"></i> New Category</button>
+                          <button class="btn btn-primary btn-lg" id="add_button" onclick="clearCategory()" data-toggle="modal" data-target="#categoryModal"><i class="fa fa-plus" aria-hidden="true"></i> New Category</button>
                         </h1>
                         <div class="box-tools pull-right">
                         </div>
@@ -66,7 +66,7 @@
           </div>
           <div class="modal-body">
             <label>Category</label>
-            <input type="text" name="category" id="category" class="form-control" placeholder="Category" required pattern="^[a-zA-Z_áéíóúñ\s]{0,15}$">
+            <input type="text" name="category" id="category" class="form-control" placeholder="Category" required pattern="^[a-zA-Z_áéíóúñ\s]{0,30}$">
             <br>
 
             <label>Status</label>
@@ -86,7 +86,7 @@
             
             <button type="submit" name="action" id="btnSave" class="btn btn-success pull-left" value="Add"><i class="fa fa-floppy-o" aria-hidden="true"></i>Save</button>
 
-            <button type="button" onclick="clear()" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i>Close</button>
+            <button type="button" onclick="clearCategory()" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i>Close</button>
           
           </div>
 
