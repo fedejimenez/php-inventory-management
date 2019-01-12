@@ -92,7 +92,7 @@ function list(){
 }
 
 // show user data in form modal
-function show(id_user){
+function showUser(id_user){
   $.post("../ajax/user.php?op=show",{id_user : id_user}, function(data, status)
   {
     data = JSON.parse(data);

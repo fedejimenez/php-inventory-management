@@ -143,7 +143,7 @@
         </li>
 
          <li class="">
-          <a href="categorias.php">
+          <a href="categories.php">
             <i class="fa fa-list" aria-hidden="true"></i> <span>Category</span>
             <span class="pull-right-container badge bg-blue">
               <i class="fa fa-bell pull-right">20</i>

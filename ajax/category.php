@@ -1,20 +1,24 @@
 <?php  
 
-  require_once("../config/connection.phhp");
+  require_once("../config/connection.php");
 
-  require_once("../models/Category.phhp");
+  require_once("../models/Category.php");
 
-  $Categories = new Category();
+  // require_once("../models/Product.php")
+
+
+  // $products = new Product();
+  $categories = new Category();
 
   // declare variables, attrib "name" from the form fields
 
-  $id_category = isset($_POST]["id_category"]);
-  $id_user = isset($_POST]["id_user"]);
-  $categrtry = isset($_POST]["category"]);
-  $status = isset($_POST]["status"]);
+  $id_category = isset($_POST["id_category"]);
+  $id_user = isset($_POST["id_user"]);
+  $category = isset($_POST["category"]);
+  $status = isset($_POST["status"]);
 
   switch ($_GET["op"]) {
-     case "guardaryeditar":
+     case "saveandedit":
 
       // check if categor exists in the DB
       
@@ -23,7 +27,7 @@
         if(empty($_POST["id_category"])){
           if(is_array($data)==true and count($data)==0){
             $categories->register_category($category,$status,$id_user);
-              $messages[]="La categoría se registró correctamente";
+              $messages[]="Category successfuly created!";
             } //close data validation 
               else {
                       $errors[]="The Category already exists";
@@ -33,7 +37,7 @@
                $categories->edit_category($id_category,$category,$status,$id_user);
                $messages[]="Category successfuly edited!";
               }
-      
+
      //message: success
      if (isset($messages)){
         
@@ -117,33 +121,36 @@
       {
         $sub_array = array();
         //STATUS
-        $status = '';
-        $attrib = "btn btn-success btn-md estado";
+        $stat = '';
+        $attrib = "btn btn-success btn-md status";
         if($row["status"] == 0){
-          $est = 'INACTIVE';
-          $atrib = "btn btn-warning btn-md estado";
+          $stat = 'INACTIVE';
+          $attrib = "btn btn-warning btn-md status";
         }
         else{
-          if($row["tatus"] == 1){
-            $est = 'ACTIVE';
+          if($row["status"] == 1){
+            $stat = 'ACTIVE';
           } 
         }
+
       $sub_array[] = $row["category"];
 
-      $sub_array[] = '<button type="button" onClick="changeStatus('.$row["id_category"].','.$row["status"].');" name="status" id="'.$row["id_category"].'" class="'.$atrib.'">'.$status.'</button>';
+      $sub_array[] = '<button type="button" onClick="changeStatusCategory('.$row["id_category"].','.$row["status"].');" name="status" id="'.$row["id_category"].'" class="'.$attrib.'">'.$stat.'</button>';
                 
-      $sub_array[] = '<button type="button" onClick="show('.$row["id_category"].');"  id="'.$row["id_category"].'" class="btn btn-warning btn-md update"><i class="glyphicon glyphicon-edit"></i> Edit</button>';
+      $sub_array[] = '<button type="button" onClick="showCategory('.$row["id_category"].');"  id="'.$row["id_category"].'" class="btn btn-warning btn-md update"><i class="glyphicon glyphicon-edit"></i> Edit</button>';
 
       $sub_array[] = '<button type="button" onClick="delete('.$row["id_category"].');"  id="'.$row["id_category"].'" class="btn btn-danger btn-md"><i class="glyphicon glyphicon-edit"></i> Delete</button>';
       
       $array[] = $sub_array;
+
       }
 
       $results = array(
-      "sEcho"=>1, //Info for Datatables
-      "iTotalRecords"=>count($array), //send total 
-      "iTotalDisplayRecords"=>count($array), 
-      "aaData"=>$data);
+        "sEcho"=>1, //Info for Datatables
+        "iTotalRecords"=>count($array), //send total 
+        "iTotalDisplayRecords"=>count($array), 
+        "aaData"=>$array
+      );
     echo json_encode($results);
     break;
   }
