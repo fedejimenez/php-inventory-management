@@ -165,7 +165,7 @@
         </li>
 
          <li class="">
-            <a href="proveedores.php">
+            <a href="suppliers.php">
               <i class="fa fa-users"></i> <span>Suppliers</span>
               <span class="pull-right-container badge bg-blue">
                 <i class="fa fa-bell pull-right">5</i>
