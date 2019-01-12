@@ -176,7 +176,7 @@
               
         $sub_array[] = '<button type="button" onClick="changeStatus('.$row["id_user"].','.$row["status"].');" name="status" id="'.$row["id_user"].'" class="'.$attrib.'">'.$stat.'</button>';
 
-        $sub_array[] = '<button type="button" onClick="show('.$row["id_user"].');"  id="'.$row["id_user"].'" class="btn btn-warning btn-md update"><i class="glyphicon glyphicon-edit"></i> Edit</button>';
+        $sub_array[] = '<button type="button" onClick="showUser('.$row["id_user"].');"  id="'.$row["id_user"].'" class="btn btn-warning btn-md update"><i class="glyphicon glyphicon-edit"></i> Edit</button>';
 
         $sub_array[] = '<button type="button" onClick="delete('.$row["id_user"].');"  id="'.$row["id_user"].'" class="btn btn-danger btn-md"><i class="glyphicon glyphicon-edit"></i> Delete</button>';
         
@@ -191,6 +191,8 @@
         "aaData"=>$array
       );
 
+      // print_r($results);
+      
       echo json_encode($results);
       break;
   }

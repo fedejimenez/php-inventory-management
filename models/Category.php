@@ -1,17 +1,19 @@
 <?php  
 
-  require_once("../config/connection.phhp");
+  require_once("../config/connection.php");
 
   /**
    * 
    */
   class Category extends Connect{
     
-    public function get_category(){
+    public function get_categories(){
       $connect=parent::connection();
       parent::set_names();
 
       $sql="select * from category";
+
+      // echo $sql; exit();
 
       $sql=$connect->prepare($sql);
       $sql->execute();
@@ -23,10 +25,12 @@
       $connect=parent::connection();  
       parent::set_names();
 
-      $sql="select * from category where id_category=?"
-      $sql=$connect->prepare($sql);
+      $sql="select * from category where id_category=?";
       
+      
+      $sql=$connect->prepare($sql);
       $sql->bindValue(1, $id_category);
+
       $sql->execute();
 
       return $result=$sql->fetchAll();
@@ -49,13 +53,13 @@
     }
 
     public function edit_category($id_category, $category, $status, $id_user){
-      $connect=parent::connectioon();
+      $connect=parent::connection();
       parent::set_names();
 
       $sql="update category set
             category=?,
             status=?,
-            id_user=?,
+            id_user=?
             where 
             id_category=?
            ";
@@ -70,7 +74,7 @@
 
       $sql->execute();
 
-      // print_r($name)
+      // print_r($sql)
     }
 
     public function change_status($id_category, $status){
@@ -84,7 +88,7 @@
         }
 
         $sql ="update category set
-               status=?,
+               status=?
 
                where 
 
@@ -92,8 +96,8 @@
               ";
 
       $sql=$connect->prepare($sql);
-      $sql->bindValue(1, $_POST["status"]);
-      $sql->bindValue(2, $_POST["id_category"]);
+      $sql->bindValue(1, $status);
+      $sql->bindValue(2, $id_category);
 
       $sql->execute();
     }
@@ -102,7 +106,7 @@
     public function get_category_name($category){
       $connect=parent::connection();
       
-      $sql="select * from category where category=?"
+      $sql="select * from category where category=?";
       $sql=$connect->prepare($sql);
       $sql->bindValue(1, $category);
 
