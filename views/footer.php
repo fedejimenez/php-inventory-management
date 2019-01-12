@@ -253,5 +253,27 @@
 <!-- Bootbox for nice modal alerts -->
 <script src="js/bootbox.min.js"></script>
 
+<!--BOOTSTRAP FILE STYLE-->
+<script src="../public/bootstrap-filestyle/src/bootstrap-filestyle.min.js"></script>
+
+<script>
+  //PRODUCT
+  $(":file").filestyle({input: false, buttonText: "Add Image",buttonName: "btn-primary"});
+</script>
+
+<!-- DATEPICKER - PRODUCTS-->
+<script>
+  $('#datepicker').datepicker({
+    /*dateFormat: 'dd-mm-yy',
+      autoclose: true*/
+    format: "dd/mm/yyyy",
+    /*clearBtn: true,
+    language: "en",*/
+    autoclose: true,
+    /*keyboardNavigation: false,
+    todayHighlight: true*/
+  })
+</script>
+
 </body>
 </html>

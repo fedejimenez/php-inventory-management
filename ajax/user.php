@@ -178,7 +178,7 @@
 
         $sub_array[] = '<button type="button" onClick="showUser('.$row["id_user"].');"  id="'.$row["id_user"].'" class="btn btn-warning btn-md update"><i class="glyphicon glyphicon-edit"></i> Edit</button>';
 
-        $sub_array[] = '<button type="button" onClick="delete('.$row["id_user"].');"  id="'.$row["id_user"].'" class="btn btn-danger btn-md"><i class="glyphicon glyphicon-edit"></i> Delete</button>';
+        $sub_array[] = '<button type="button" onClick="deleteUser('.$row["id_user"].');"  id="'.$row["id_user"].'" class="btn btn-danger btn-md"><i class="glyphicon glyphicon-edit"></i> Delete</button>';
         
         $array[]=$sub_array;
           

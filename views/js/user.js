@@ -15,7 +15,7 @@ function init(){
 }
 
 //clear from fields
-function clear(){
+function clearUser(){
   $("#idnumber").val("");
   $('#name').val("");
   $('#lastname').val("");
@@ -138,7 +138,7 @@ function saveandedit(e){
         $("#results_ajax").html(data);
         $("#user_data").DataTable().ajax.reload();
         
-        clear(); // clear fields in the form
+        clearUser(); // clear fields in the form
        }
     });
 

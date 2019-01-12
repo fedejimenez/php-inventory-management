@@ -7,7 +7,7 @@ function init(){
   // whrn clicking submit;
   $("#category_form").on("submit",function(e)
   {
-    saveandedit(e);  
+    saveCategory(e);  
   })
     
   // change modal title
@@ -17,8 +17,9 @@ function init(){
 }
 
 // clear fields
-function clear()
+function clearCategory()
 {
+  console.log("in");
   $('#category').val("");
   $('#status').val("");
   $('#id_category').val("");
@@ -98,7 +99,7 @@ function showCategory(id_category){
 }
 
 // when clicking submitt
-function saveandedit(e){
+function saveCategory(e){
   e.preventDefault(); 
   var formData = new FormData($("#category_form")[0]);
     $.ajax({
@@ -115,7 +116,7 @@ function saveandedit(e){
           $('#results_ajax').html(data);
           $('#category_data').DataTable().ajax.reload();
 
-          clear();
+          clearCategory();
         }
     });
 }

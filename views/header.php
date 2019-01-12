@@ -52,6 +52,10 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  <!-- cutstomized styles -->
+  <link rel="stylesheet" href="../public/css/styles.css">
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -152,7 +156,7 @@
         </li>
 
          <li class="">
-          <a href="productos.php">
+          <a href="products.php">
             <i class="fa fa-tasks" aria-hidden="true"></i> <span>Products</span>
             <span class="pull-right-container badge bg-blue">
               <i class="fa fa-bell pull-right">20</i>
