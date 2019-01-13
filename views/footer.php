@@ -273,6 +273,18 @@
     /*keyboardNavigation: false,
     todayHighlight: true*/
   })
+
+  // for end_date when searching for a purchase
+  $('#datepicker2').datepicker({
+    /*dateFormat: 'dd-mm-yy',
+      autoclose: true*/
+    format: "dd/mm/yyyy",
+    /*clearBtn: true,
+    language: "en",*/
+    autoclose: true,
+    /*keyboardNavigation: false,
+    todayHighlight: true*/
+  })
 </script>
 
 </body>

@@ -182,10 +182,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="purchases.php"><i class="fa fa-circle-o"></i>Purchases</a></li>
-            <li><a href="purchases_view.php"><i class="fa fa-circle-o"></i>View Purchases</a></li>
-            <li><a href="purchases_view_dates.php"><i class="fa fa-circle-o"></i>View Purchases - Dates</a></li>
-            <li><a href="purchases_view_month.php"><i class="fa fa-circle-o"></i>View Purchases - Monthy</a></li>
+            <li><a href="purchases.php"><i class="fa fa-circle-o"></i>New Purchase</a></li>
+            <li><a href="show_purchases.php"><i class="fa fa-circle-o"></i>Show Purchases</a></li>
+            <li><a href="search_purchases_date.php"><i class="fa fa-circle-o"></i>Search Purchases - Dates</a></li>
+            <li><a href="search_purchases_month.php"><i class="fa fa-circle-o"></i>Search Purchases - Monthy</a></li>
           </ul> 
         </li>
 

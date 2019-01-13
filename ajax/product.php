@@ -293,6 +293,15 @@
           }
           echo json_encode($output);
      break;
+
+    case "register_purchase";
+
+      require_once('../models/Purchase.php');
+
+      $purchase = new Purchase();
+      $purchase->add_purchase_details();
+
+     break; 
     }
 
 ?>

@@ -225,7 +225,7 @@ function addDetails(id_product,product, status){
                       var obj = {
                         quantity : 1,
                         codProd  : id_product,
-                        codCat   : data.id_categoria,
+                        codCat   : data.id_category,
                         product : data.product,
                         currency   : data.currency,
                         price   : data.buying_price,
@@ -358,5 +358,75 @@ function addDetails(id_product,product, status){
   }
 
 // =========== END FUNCTIONS FROM PURCHASES SECTION ===================
+
+
+ function registerPurchase(){
+    
+  // variables declaration
+  var purchase_number = $("#purchase_number").val();
+  var idnumber = $("#idnumber").val();
+  var corporate_name = $("#corporate_name").val();
+  var address = $("#address").val();
+  var total = $("#total").html();
+  var purchaser = $("#purchaser").html();
+  var payment_type = $("#payment_type").val();
+  var id_user = $("#id_user").val();
+  var id_supplier = $("#id_supplier").val();
+
+  // validation empty fields in form
+
+  if(idnumber!="" && corporate_name!="" && address!="" && payment_type!="" && details!=""){
+  
+   /*console.log(purchase_number);
+   console.log(idnumber);
+   console.log(corporate_name);
+   console.log(address);
+   console.log(datepicker);*/
+
+    $.ajax({
+      url:"../ajax/product.php?op=register_purchase",
+      method:"POST",
+      data:{'arrayPurchase':JSON.stringify(details), 'purchase_number':purchase_number,'idnumber':idnumber,'corporate_name':corporate_name,'address':address,'total':total,'purchaser':purchaser,'payment_type':payment_type,'id_user':id_user,'id_supplier':id_supplier},
+      cache: false,
+      dataType:"html",
+      error:function(x,y,z){
+        console.log(x);
+        console.log(y);
+        console.log(z);
+      },
+         
+      success:function(data){
+        console.log(data);
+
+        var idnumber = $("#idnumber").val("");
+        var corporate_name = $("#corporate_name").val("");
+        var address = $("#address").val("");
+        var subtotal = $("#subtotal").html("");
+        var total = $("#total").html("");
+         
+              
+        details = [];
+        $('#listProdPurchase').html('');
+          setTimeout ("bootbox.alert('Purchase successfully registered.');", 100); 
+          // reload page
+          setTimeout ("explode();", 2000); 
+      }, 
+      error:function(e){
+        console.log(e);
+      }
+
+    }); 
+
+   } else{
+     bootbox.alert("You must add a product, supplier data and a payment type.");
+     return false;
+   }  
+  }
+
+/*Reload page after registering the purchase*/
+function explode(){
+  location.reload();
+}
+
 
 init();

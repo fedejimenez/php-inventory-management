@@ -24,7 +24,7 @@
     public function purchase_number(){
 
       $connect=parent::connection();
-      parent::set_namonth();
+      parent::set_names();
         
       $sql="select purchase_number from purchases_details;";
       $sql=$connect->prepare($sql);
@@ -46,8 +46,10 @@
       } 
     }
 
-    public function add_purchase_detail(){
+    // called from ajax, product, register_purchase case
+    public function add_purchase_details(){
       //echo json_encode($_POST['arrayPurchase']);
+      // get array from ajax in product.js -> registerPurchase()
       $str = '';
       $details = array();
       $details = json_decode($_POST['arrayPurchase']);
@@ -158,7 +160,7 @@
         }
         $subtotal=$d["total"];
 
-      $tax= 20/100;
+      $tax= 10/100;
       $total_iv=$subtotal*$tax;
       $total_tax=round($total_iv);
       $tot=$subtotal+$total_tax;
@@ -185,10 +187,10 @@
       $sql2->execute();
     }
 
-    public function get_supplier_detail($purchase_number){
+    public function get_detail_supplier($purchase_number){
 
       $connect=parent::connection();
-      parent::set_namonth();
+      parent::set_names();
 
       $sql="select c.purchase_date,c.purchase_number, c.supplier,  c.idnumber_supplier,c.total,p.id_supplier,p.idnumber,p.corporate_name,p.phone,p.email,p.address,p.date,p.status
         from purchases as c, supplier as p
@@ -208,10 +210,10 @@
       return $result=$sql->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function get_purchases_details_supplier($purchase_number){
+    public function get_purchase_details_supplier($purchase_number){
 
       $connect=parent::connection();
-      parent::set_namonth();
+      parent::set_names();
 
       $sql="select d.purchase_number,d.idnumber_supplier,d.product, d.currency, d.buying_price, d.purchase_quantity, d.discount, d.ammount, d.purchase_date, c.purchase_number, c.currency, c.subtotal, c.total_tax, c.total, p.id_supplier, p.idnumber, p.corporate_name, p.phone, p.email, p.address, p.date, p.status
           from purchases_details as d, purchases as c, supplier as p
@@ -256,7 +258,7 @@
                   <th></th>
                   <th>
                     <p>SUB-TOTAL</p>
-                    <p>TAX(20%)</p>
+                    <p>TAX(10%)</p>
                     <p class='margen_total'>TOTAL</p>
                   </th>
                   <th>
@@ -271,7 +273,7 @@
     public function change_purchase_status($id_purchases, $purchase_number, $status){
 
       $connect=parent::connection();
-      parent::set_namonth();
+      parent::set_names();
             
       $status = 0;
       

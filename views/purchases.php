@@ -25,7 +25,7 @@
       <div class="panel panel-default">
         <div class="panel-body">
          <div class="btn-group text-center">
-          <a href="search_purchases.php" class="btn btn-primary btn-lg" ><i class="fa fa-search" aria-hidden="true"></i> Search Purchase</a>
+          <a href="show_purchases.php" class="btn btn-primary btn-lg" ><i class="fa fa-search" aria-hidden="true"></i> Show Purchases</a>
          </div>
        </div>
       </div>
@@ -47,7 +47,7 @@
                   <div class="form-group">
                     <label for="" class="col-lg-3 control-label">Purchase Number</label>
                     <div class="col-lg-9">
-                      <input type="text" class="form-control" id="purchase_number" name="purchase_number" value="<?php //$code=$purchase->purchase_number();?>"  readonly>
+                      <input type="text" class="form-control" id="purchase_number" name="purchase_number" value="<?php $code=$purchase->purchase_number();?>"  readonly>
                     </div>
                   </div>
 
