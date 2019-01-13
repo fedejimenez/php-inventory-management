@@ -26,7 +26,7 @@
       // check if product existts
       $data = $products->get_product_name($_POST["product"]);
       
-      if(empty($_POST["id_producto"])){
+      if(empty($_POST["id_product"])){
         if(is_array($data)==true and count($data)==0){
           $products->register_product($id_category,$product,$package,$unit,$currency,$buying_price,$sale_price,$stock,$status,$image,$id_user);
 
@@ -211,6 +211,88 @@
       echo json_encode($results);
       break;
     
+    case "list_in_purchases":
+      $data=$products->get_products();
+      $array= Array();
+
+      foreach($data as $row){
+        $sub_array = array();
+        $stat = '';
+        $attrib = "btn btn-success btn-md status";
+        
+        if($row["status"] == 0){
+          $stat = 'INACTIVE';
+          $attrib = "btn btn-warning btn-md status";
+        }
+        else{
+          if($row["status"] == 1){
+            $stat = 'ACTIVE';
+          } 
+        }
+
+        // Red if less than 10 units
+        $stock=""; 
+
+        if($row["stock"]<=10){
+          $stock = $row["stock"];
+          $atribute = "badge bg-red-active";
+        } else {
+            $stock = $row["stock"];
+            $atribute = "badge bg-green";
+        }
+                 
+        $currency = $row["currency"];
+
+        
+        //$sub_array = array();
+        $sub_array[] = $row["category"];
+        $sub_array[] = $row["product"];
+        $sub_array[] = $row["package"];
+        $sub_array[] = $row["unit"];
+        $sub_array[] = $currency." ".$row["buying_price"];
+        $sub_array[] = $currency." ".$row["sale_price"];
+
+        $sub_array[] = '<span class="'.$atribute.'">'.$row["stock"].'
+                  </span>';
+
+        $sub_array[] = '<button type="button"  name="status" id="'.$row["id_product"].'" class="'.$attrib.'">'.$stat.'</button>';
+          
+        $sub_array[] = '<button type="button" name="" id="'.$row["id_product"].'" class="btn btn-primary btn-md " onClick="addDetails('.$row["id_product"].',\''.$row["product"].'\','.$row["status"].')"><i class="fa fa-plus"></i> Add</button>';
+                
+        $array[] = $sub_array;
+       }
+
+
+      $results = array(
+        "sEcho"=>1,
+        "iTotalRecords"=>count($array), 
+        "iTotalDisplayRecords"=>count($array), 
+        "aaData"=>$array
+      );
+      echo json_encode($results);
+      break;
+
+    case "search_product";
+      // returns product details in purchases section    
+      $data=$products->get_product_by_id_status($_POST["id_product"], $_POST["status"]);
+
+      // check if product is active
+      if(is_array($data)==true and count($data)>0){
+        foreach($data as $row){
+          $output["id_product"] = $row["id_product"];
+          $output["id_category"] = $row["id_category"];
+          $output["product"] = $row["product"];
+          $output["currency"] = $row["currency"];
+          $output["buying_price"] = $row["buying_price"];
+          $output["stock"] = $row["stock"];
+          $output["status"] = $row["status"];
+        }
+              //echo json_encode($output);
+          } else {
+                 $output["error"]="This product is inactive, try aother one.";
+          }
+          echo json_encode($output);
+     break;
     }
 
 ?>

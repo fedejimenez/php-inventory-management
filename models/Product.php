@@ -100,6 +100,24 @@
       return $result= $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // checks if there are active registers
+    public function get_product_by_id_status($id_product,$status){
+      // called from ajax -> search_product case
+      $connect= parent::connection();
+
+      $status=1; // only active records
+
+      $sql="select * from product where id_product=? and status=?";
+
+      $sql=$connect->prepare($sql);
+
+      $sql->bindValue(1, $id_product);
+      $sql->bindValue(2, $status);
+      $sql->execute();
+
+      return $result= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function edit_product($id_product,$id_category,$product,$package,$unit,$currency,$buying_price,$sale_price,$stock,$status,$image,$id_user){
 
       $connect=parent::connection();

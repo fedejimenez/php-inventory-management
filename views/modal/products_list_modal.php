@@ -12,7 +12,7 @@
           <!--column-12 -->
           <div class="table-responsive">
             <div class="box-body">
-              <table id="products_list_data" class="table table-bordered table-striped">
+              <table id="list_products_data" class="table table-bordered table-striped">
                 <thead>
                   <tr>
                     <th class="all">Category</th>
