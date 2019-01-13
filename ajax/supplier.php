@@ -192,7 +192,10 @@
       $sub_array[] = $row["corporate_name"];
       $sub_array[] = date("d-m-Y", strtotime($row["date"]));
          
-      $sub_array[] = '<button type="button" onClick="addSupplier('.$row["id_supplier"].','.$row["status"].');" id="'.$row["id_supplier"].'" class="btn btn-primary btn-md"><i class="fa fa-plus" aria-hidden="true"></i> Add</button>';
+      $sub_array[] = '<button type="button" name="status" id="'.$row["id_supplier"].'" class="'.$attrib.'">'.$stat.'</button>';
+                
+
+      $sub_array[] = '<button type="button" onClick="add_supplier_register('.$row["id_supplier"].','.$row["status"].');" id="'.$row["id_supplier"].'" class="btn btn-primary btn-md"><i class="fa fa-plus" aria-hidden="true"></i> Add</button>';
                 
       $array[] = $sub_array;
     }

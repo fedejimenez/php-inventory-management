@@ -200,7 +200,7 @@ function listSuppliersInPurchases(){
 
  
 // Autocomplete supplier data in purchases
-function add_register(id_supplier,status){
+function add_supplier_register(id_supplier,status){
   $.ajax({
     url:"../ajax/supplier.php?op=search_supplier",
     method:"POST",
@@ -209,7 +209,7 @@ function add_register(id_supplier,status){
     success:function(data){
       if(data.status){
 
-        $('#modalProveedor').modal('hide');
+        $('#supplierModal').modal('hide');
         $('#idnumber').val(data.idnumber);
         $('#corporate_name').val(data.corporate_name);
         $('#address').val(data.address);
