@@ -36,6 +36,9 @@
       $sql->bindValue(6, $_POST["address"]);
       $sql->bindValue(7, $_POST["status"]);
       $sql->bindValue(8, $_POST["id_user"]);
+      
+      // print_r($_POST); exit();
+      
       $sql->execute();
     }
 
@@ -65,6 +68,8 @@
       $sql->bindValue(1, $id_client);
       $sql->execute();
 
+      // echo $sql; exit();
+
       return $result= $sql->fetchAll(PDO::FETCH_ASSOC);
     } 
 
@@ -89,7 +94,6 @@
 
             ";
             
-
       $sql=$connect->prepare($sql);
 
       $sql->bindValue(1, $_POST["idnumber"]);
@@ -101,6 +105,9 @@
       $sql->bindValue(7, $_POST["status"]);
       $sql->bindValue(8, $_POST["id_user"]);
       $sql->bindValue(9, $_POST["idnumber_client"]);
+
+      // print_r($_POST); exit();
+
       $sql->execute();
 
     }
@@ -168,6 +175,6 @@
 
       return $result=$sql->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
   }
 ?>

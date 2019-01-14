@@ -104,20 +104,23 @@ function saveClient(e){
   var formData = new FormData($("#client_form")[0]);
 
   $.ajax({
-      url: "../ajax/client.php?op=savaandedit",
+      url: "../ajax/client.php?op=saveandedit",
       type: "POST",
       data: formData,
       contentType: false,
       processData: false,
 
-      success: function(datos){                    
-          console.log(datos);
+      success: function(data){                    
+          console.log(data);
           $('#client_form')[0].reset();
           $('#clientModal').modal('hide');
-          $('#results_ajax').html(datos);
+          $('#results_ajax').html(data);
           $('#client_data').DataTable().ajax.reload();
       
           clearClient();
+      },
+      error: function(e){
+        console.log(e);
       }
   });
 }
@@ -130,7 +133,11 @@ function changeClientStatus(id_client, status){
         method:"POST",
         data:{id_client:id_client, status:status},
         success: function(data){
+          // console.log(data);
           $('#client_data').DataTable().ajax.reload();
+        }, 
+        error: function(e){
+          console.log(e);
         }
       });
     }
@@ -141,11 +148,10 @@ function changeClientStatus(id_client, status){
     //Función Listar
 function listInSales(){
 
-  table_in_sales=$('#lista_clients_data').dataTable(
-  {
-    "aProcessing": true,//Activamos el procesamiento del datatables
-      "aServerSide": true,//Paginación y filtrado realizados por el servidor
-      dom: 'Bfrtip',//Definimos los elementos del control de table
+  table_in_sales=$('#lista_clients_data').dataTable({
+    "aProcessing": true,
+      "aServerSide": true,
+      dom: 'Bfrtip',
       buttons: [              
                 'copyHtml5',
                 'excelHtml5',
@@ -154,7 +160,7 @@ function listInSales(){
             ],
     "ajax":
         {
-          url: '../ajax/client.php?op=listar_en_ventas',
+          url: '../ajax/client.php?op=list_in_sales',
           type : "get",
           dataType : "json",            
           error: function(e){
@@ -164,10 +170,8 @@ function listInSales(){
     "bDestroy": true,
     "responsive": true,
     "bInfo":true,
-    "iDisplayLength": 10,//Por cada 10 registros hace una paginación
-      "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
-      
-         
+    "iDisplayLength": 10,
+      "order": [[ 0, "desc" ]],
     "language": {
           "sProcessing":     "Loading...",
           "sLengthMenu":     "Show _MENU_ registers",
@@ -192,53 +196,32 @@ function listInSales(){
               "sSortDescending": ": Sort by descending order"
           }
     }//end language
-         
   }).DataTable();
 }
 
-
-//AUTOCOMPLETAR DATOS DEL CLIENTE EN VENTAS
-  
-
-    function agregar_registro(id_client,est){
-
-      
-    $.ajax({
+//Autocomplete client in sales section
+function addClientRegister(id_client,est){
+  $.ajax({
       url:"../ajax/client.php?op=buscar_client",
       method:"POST",
       data:{id_client:id_client,est:est},
       dataType:"json",
-      success:function(data)
-      {
-               
-             
-            /*si el client esta activo entonces se ejecuta, de lo contrario 
-            el formulario no se envia y aparecerá un mensaje */
-            if(data.status){
-
-        $('#modalClient').modal('hide');
-        $('#idnumber').val(data.idnumber_client);
-        $('#name').val(data.name);
-        $('#lastname').val(data.lastname);
-        $('#address').val(data.address);
-        $('#id_client').val(id_client);
-        
-
-            } else{
-                
-                bootbox.alert(data.error);
-                
-
-
-             } //cierre condicional error
-
-                        
-        
+      success:function(data){
+        if(data.status){
+          $('#modalClient').modal('hide');
+          $('#idnumber').val(data.idnumber_client);
+          $('#name').val(data.name);
+          $('#lastname').val(data.lastname);
+          $('#address').val(data.address);
+          $('#id_client').val(id_client);
+        } else{
+            bootbox.alert(data.error);
+        } 
+      }, 
+      error: function(e){
+        console.log(e);
       }
-    })
-  
-    }
-
-
+  })
+}
 
 init();

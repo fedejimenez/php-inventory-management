@@ -1,7 +1,7 @@
 <?php
 
   require_once("../config/connection.php");
-  require_once("../models/Clients.php");
+  require_once("../models/Client.php");
 
   $clients = new Client();
 
@@ -33,7 +33,7 @@
         }
       }// end if empty
         else {
-            $clients->editar_client($idnumber,$name,$lastname,$phone,$email,$address,$status,$id_user);
+            $clients->edit_client($idnumber,$name,$lastname,$phone,$email,$address,$status,$id_user);
             $messages[]="Client succesfully edited!";
       }
       //mensaje success
@@ -41,7 +41,7 @@
         ?>
         <div class="alert alert-success" role="alert">
             <button type="button" class="close" array-dismiss="alert">&times;</button>
-            <strong>¡Bien hecho!</strong>
+            <strong>Yay!</strong>
             <?php
               foreach ($messages as $message) {
                   echo $message;
@@ -106,10 +106,13 @@
 
     case "changestatus":
       $data=$clients->get_client_by_id($_POST["id_client"]);
+          echo $data;
         if(is_array($data)==true and count($data)>0){
-          $clients->edit_status($_POST["id_client"],$_POST["status"]);
-          } 
 
+          print_r($data);
+          
+          $clients->change_client_status($_POST["id_client"],$_POST["status"]);
+          } 
       break;
 
     case "list":
