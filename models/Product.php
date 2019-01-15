@@ -25,7 +25,7 @@
 
     public function get_products_in_sales(){
       $connect= parent::connection();
-      $sql= "select p.id_product,p.id_category,p.product,p.package,p.unit, p.moneda, p.buying_price, p.sale_price, p.stock, p.status, p.image, p.expiration_date as expiration_date,c.id_category, c.category as category
+      $sql= "select p.id_product, p.id_category, p.product, p.package, p.unit, p.currency, p.buying_price, p.sale_price, p.stock, p.status, p.image, p.expiration_date as expiration_date, c.id_category, c.category as category
            
         from product p 
               

@@ -319,6 +319,7 @@
     case "list_in_sales":
 
       $data=$products->get_products_in_sales();
+
       $array= Array();
 
       foreach($data as $row){
@@ -361,10 +362,7 @@
 
 
         if($row["image"] != ''){
-            $sub_array[] = '
-                            <img src="upload/'.$row["image"].'" class="img-thumbnail" width="100" height="100" /><input type="hidden" name="hidden_product_image" value="'.$row["image"].'" />
-
-                            <span><i class="fa fa-calendar" aria-hidden="true"></i>  '.$date.' <br/><strong>(expiration)</strong></span> 
+            $sub_array[] = '<img src="upload/'.$row["image"].'" class="img-thumbnail" width="100" height="100" /><input type="hidden" name="hidden_product_image" value="'.$row["image"].'" /><span><i class="fa fa-calendar" aria-hidden="true"></i>  '.$date.' <br/><strong>(expiration)</strong></span> 
                             ';
         }
           else{
@@ -374,6 +372,7 @@
         $sub_array[] = '<button type="button" name="" id="'.$row["id_product"].'" class="btn btn-primary btn-md " onClick="addDetailsSales('.$row["id_product"].',\''.$row["product"].'\','.$row["status"].')"><i class="fa fa-plus"></i> Add</button>';
 
         $array[] = $sub_array;
+
       }
 
 

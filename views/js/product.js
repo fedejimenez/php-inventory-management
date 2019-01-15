@@ -521,8 +521,7 @@ function addDetailsSales(id_product,product,status){
                       };
 
                       details.push(obj);
-                      listDd
-                   etailsSales();
+                      listDetailsSales();
                       $('#list_products_sales_Modal').modal("hide");
                     }//if validacion id_product
                       else {
@@ -591,7 +590,7 @@ function setQuantityAjax(event, obj, idx){
       //alert(stock);
     
   $.ajax({
-         url:"../ajax/sales.php?op=search_quantity_sale",
+         url:"../ajax/sale.php?op=search_quantity_sale",
          method:"POST",
          data:{id_product:id_product, quantity_sale:quantity_sale},
          dataType:"json",
