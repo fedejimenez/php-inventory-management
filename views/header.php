@@ -184,13 +184,13 @@
           <ul class="treeview-menu">
             <li><a href="purchases.php"><i class="fa fa-circle-o"></i>New Purchase</a></li>
             <li><a href="show_purchases.php"><i class="fa fa-circle-o"></i>Show Purchases</a></li>
-            <li><a href="search_purchases_date.php"><i class="fa fa-circle-o"></i>Search Purchases - Dates</a></li>
-            <li><a href="search_purchases_month.php"><i class="fa fa-circle-o"></i>Search Purchases - Monthy</a></li>
+            <li><a href="search_purchases_date.php"><i class="fa fa-circle-o"></i>Search Purchases by Date</a></li>
+            <li><a href="search_purchases_month.php"><i class="fa fa-circle-o"></i>Search Purchases by Month</a></li>
           </ul> 
         </li>
 
            <li class="">
-          <a href="clientes.php">
+          <a href="clients.php">
             <i class="fa fa-users"></i> <span>Clients</span>
             <span class="pull-right-container badge bg-blue">
               <i class="fa fa-bell pull-right">3</i>
@@ -199,7 +199,7 @@
         </li>
 
          <li class="treeview">
-          <a href="ventas.php">
+          <a href="sales.php">
             <i class="fa fa-suitcase" aria-hidden="true"></i> <span>Sales</span>
             <span class="pull-right-container badge bg-blue">
               <i class="fa fa-bell pull-right">8</i>
@@ -207,10 +207,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="sales.php"><i class="fa fa-circle-o"></i>Sales</a></li>
-            <li><a href="sales_view.php"><i class="fa fa-circle-o"></i>View Sales</a></li>
-            <li><a href="sales_view_dates.php"><i class="fa fa-circle-o"></i>View Sales - Dates</a></li>
-            <li><a href="sales_view_month.php"><i class="fa fa-circle-o"></i>View Sales - Monthy</a></li>
+            <li><a href="sales.php"><i class="fa fa-circle-o"></i>New Sale</a></li>
+            <li><a href="sales_view.php"><i class="fa fa-circle-o"></i>Show Sales</a></li>
+            <li><a href="search_sales_date.php"><i class="fa fa-circle-o"></i>Search Sales by Date</a></li>
+            <li><a href="search_sales_month.php"><i class="fa fa-circle-o"></i>Saerch Sales by Month</a></li>
           </ul> 
         </li>
 

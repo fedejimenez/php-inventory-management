@@ -148,7 +148,7 @@ function changeClientStatus(id_client, status){
     //Función Listar
 function listInSales(){
 
-  table_in_sales=$('#lista_clients_data').dataTable({
+  table_in_sales=$('#list_clients_data').dataTable({
     "aProcessing": true,
       "aServerSide": true,
       dom: 'Bfrtip',
@@ -200,11 +200,11 @@ function listInSales(){
 }
 
 //Autocomplete client in sales section
-function addClientRegister(id_client,est){
+function addClientRegister(id_client,status){
   $.ajax({
-      url:"../ajax/client.php?op=buscar_client",
+      url:"../ajax/client.php?op=search_client",
       method:"POST",
-      data:{id_client:id_client,est:est},
+      data:{id_client:id_client,status:status},
       dataType:"json",
       success:function(data){
         if(data.status){

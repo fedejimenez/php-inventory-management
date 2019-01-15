@@ -257,10 +257,20 @@
 
         $sub_array[] = '<button type="button"  name="status" id="'.$row["id_product"].'" class="'.$attrib.'">'.$stat.'</button>';
           
+        $date= date("d-m-Y", strtotime($row["expiration_date"]));       
+        if($row["image"] != ''){
+            $sub_array[] = '<img src="upload/'.$row["image"].'" class="img-thumbnail" width="100" height="100" /><input type="hidden" name="hidden_product_image" value="'.$row["image"].'" />
+              <span><i class="fa fa-calendar" aria-hidden="true"></i>  '.$date.' <br/><strong>(expiration)</strong></span> 
+            ';
+        }
+          else{
+            $sub_array[] = '<button type="button" id="" class="btn btn-primary btn-md"><i class="fa fa-picture-o" aria-hidden="true"></i> No image</button>';
+        }
+
         $sub_array[] = '<button type="button" name="" id="'.$row["id_product"].'" class="btn btn-primary btn-md " onClick="addDetails('.$row["id_product"].',\''.$row["product"].'\','.$row["status"].')"><i class="fa fa-plus"></i> Add</button>';
                 
         $array[] = $sub_array;
-       }
+      }
 
 
       $results = array(

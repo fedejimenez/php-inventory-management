@@ -187,7 +187,7 @@
          
         $sub_array[] = '<button type="button"  name="status" id="'.$row["id_client"].'" class="'.$attrib.'">'.$stat.'</button>';
 
-        $sub_array[] = '<button type="button" onClick="addclientRegister('.$row["id_client"].','.$row["status"].');" id="'.$row["id_client"].'" class="btn btn-primary btn-md"><i class="fa fa-plus" aria-hidden="true"></i> Add</button>';
+        $sub_array[] = '<button type="button" onClick="addClientRegister('.$row["id_client"].','.$row["status"].');" id="'.$row["id_client"].'" class="btn btn-primary btn-md"><i class="fa fa-plus" aria-hidden="true"></i> Add</button>';
         
         $array[] = $sub_array;
       }
