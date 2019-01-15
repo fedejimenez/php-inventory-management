@@ -23,6 +23,23 @@
       return $result= $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function get_products_in_sales(){
+      $connect= parent::connection();
+      $sql= "select p.id_product,p.id_category,p.product,p.package,p.unit, p.moneda, p.buying_price, p.sale_price, p.stock, p.status, p.image, p.expiration_date as expiration_date,c.id_category, c.category as category
+           
+        from product p 
+              
+        INNER JOIN category c ON p.id_category=c.id_category
+
+        where p.stock > 0 and p.status='1'
+
+        ";
+
+      $sql=$connect->prepare($sql);
+      $sql->execute();
+
+      return $result= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     /* route views/upload*/
     public function upload_image() {
@@ -140,7 +157,7 @@
       if($_FILES["product_image"]["name"] != ''){
         $image = $image_product->upload_image();
       }else{
-        $imagen = $_POST["hidden_producto_imagen"];
+        $image = $_POST["hidden_product_image"];
       }
 
       // date 
