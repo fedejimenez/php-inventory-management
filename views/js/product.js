@@ -513,7 +513,7 @@ function addDetailsSales(id_product,product,status){
                         codProd  : id_product,
                         product : data.product,
                         currency   : data.currency,
-                        price   : data.price_sale,
+                        price   : data.sale_price,
                         stock    : data.stock,
                         discount    : 0,
                         ammount  : 0,
@@ -521,6 +521,7 @@ function addDetailsSales(id_product,product,status){
                       };
 
                       details.push(obj);
+                      // console.log(details);
                       listDetailsSales();
                       $('#list_products_sales_Modal').modal("hide");
                     }//if validacion id_product
