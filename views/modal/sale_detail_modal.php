@@ -1,4 +1,4 @@
-<div class="modal fade" id="sale_detail">
+<div class="modal fade" id="detail_sale">
   <div class="modal-dialog sizeModal">
     <div class="bg-warning">
       <div class="modal-header">
@@ -31,7 +31,7 @@
               </table>
               
               <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                <table id="detalles" class="table table-striped table-bordered table-condensed table-hover">
+                <table id="details" class="table table-striped table-bordered table-condensed table-hover">
                   <thead style="background-color:#A9D0F5">
                     <th>Quantity</th>
                     <th>Product</th>

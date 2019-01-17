@@ -16,7 +16,7 @@
     </section>
     <!-- Main content -->
     <section class="content">
-      <div id="resultados_ajax"></div>
+      <div id="results_ajax"></div>
       <div class="panel panel-default">
         <div class="panel-body">
           <div class="btn-group text-center">
@@ -38,7 +38,7 @@
                 <thead>
                   <tr>
                     <th>See Details</th>
-                    <th>Sale DAte</th>
+                    <th>Sale Date</th>
                     <th>Sale Number</th>
                     <th>Client</th>
                     <th>Client Id Number</th>
@@ -68,7 +68,7 @@
 
 <?php
   } else {
-        header("Location:".Connect::rutes()."views/index.php");
+        header("Location:".Connect::routes()."views/index.php");
   }
 
 ?>

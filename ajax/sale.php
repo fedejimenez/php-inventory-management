@@ -41,6 +41,8 @@
       "iTotalRecords"=>count($array),
       "iTotalDisplayRecords"=>count($array), 
       "aaData"=>$array);
+
+      // print_r($results); exit();
       echo json_encode($results);
       break;
 
@@ -123,11 +125,12 @@
       }
       break;
       
-    case "change_status_sale":
-      $data=$sales->get_sales_por_id($_POST["id_sales"]);
-        if(is_array($data)==true and count($data)>0){
-          $sales->cambiar_status($_POST["id_sales"], $_POST["sale_number"], $_POST["status"]);
-          } 
+    case "change_sale_status":
+      $data=$sales->get_sales_by_id($_POST["id_sales"]);
+      // print_r($data); exit();
+      if(is_array($data)==true and count($data)>0){
+        $sales->change_sale_status($_POST["id_sales"], $_POST["sale_number"], $_POST["status"]);
+        } 
       break;
 
     case "search_sales_date":

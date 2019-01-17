@@ -74,7 +74,7 @@
                   <th></th>
                   <th>
                     <p>SUB-TOTAL</p>
-                    <p>IVA(20%)</p>
+                    <p>IVA(10%)</p>
                     <p class='margen_total'>TOTAL</p>
                   </th>
                   <th>
@@ -242,10 +242,11 @@
       $sql=$connect->prepare($sql);
       $sql->bindValue(1,$id_sales);
       $sql->execute();
+      // echo $sql ; exit();
       return $result= $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function cange_sales_status(){
+    public function change_sale_status(){
       $connect=parent::connection();
       parent::set_names();
       $status = 0;
