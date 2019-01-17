@@ -5,336 +5,210 @@
 
   $sales = new Sale();
 
- 
- 
-
   switch($_GET["op"]){
-
-    case "buscar_sales":
-
-     $datos=$sales->get_sales();
-
-     //Vamos a declarar un array
-   $data= Array();
-
-      foreach($datos as $row)
-      {
+    case "search_sales":
+      $data=$sales->get_sales();
+      $array= Array();
+      foreach($data as $row){
         $sub_array = array();
-
-        $est = '';
-        //$atrib = 'activo';
-         $atrib = "btn btn-danger btn-md estado";
-        if($row["estado"] == 1){
-          $est = 'PAGADO';
-          $atrib = "btn btn-success btn-md estado";
+        $stat = '';
+         $attrib = "btn btn-danger btn-md status";
+        if($row["status"] == 1){
+          $stat = 'PAYED';
+          $attrib = "btn btn-success btn-md status";
         }
         else{
-          if($row["estado"] == 0){
-            $est = 'ANULADO';
-            //$atrib = '';
+          if($row["status"] == 0){
+            $stat = 'CANCELED';
           } 
         }
 
+        $sub_array[] = '<button class="btn btn-warning detail" id="'.$row["sale_number"].'"  data-toggle="modal" data-target="#detail_sale"><i class="fa fa-eye"></i></button>';
+        $sub_array[] = date("d-m-Y",strtotime($row["sale_date"]));
+        $sub_array[] = $row["sale_number"];
+        $sub_array[] = $row["client"];
+        $sub_array[] = $row["idnumber_client"];
+        $sub_array[] = $row["seller"];
+        $sub_array[] = $row["payment_type"];
+        $sub_array[] = $row["currency"]." ".$row["total"];
         
-
-         $sub_array[] = '<button class="btn btn-warning detalle" id="'.$row["numero_venta"].'"  data-toggle="modal" data-target="#detalle_venta"><i class="fa fa-eye"></i></button>';
-               $sub_array[] = date("d-m-Y",strtotime($row["fecha_venta"]));
-         $sub_array[] = $row["numero_venta"];
-         $sub_array[] = $row["cliente"];
-         $sub_array[] = $row["cedula_cliente"];
-         $sub_array[] = $row["vendedor"];
-         $sub_array[] = $row["tipo_pago"];
-         $sub_array[] = $row["moneda"]." ".$row["total"];
-
-        
-           /*IMPORTANTE: poner \' cuando no sea numero, sino no imprime*/
-                 $sub_array[] = '<button type="button" onClick="cambiarEstado('.$row["id_sales"].',\''.$row["numero_venta"].'\','.$row["estado"].');" name="estado" id="'.$row["id_sales"].'" class="'.$atrib.'">'.$est.'</button>';
-                
-        $data[] = $sub_array;
+        $sub_array[] = '<button type="button" onClick="changeSaleStatus('.$row["id_sales"].',\''.$row["sale_number"].'\','.$row["status"].');" name="status" id="'.$row["id_sales"].'" class="'.$attrib.'">'.$stat.'</button>';
+        $array[] = $sub_array;
       }
 
-
-
       $results = array(
-      "sEcho"=>1, //Información para el datatables
-      "iTotalRecords"=>count($data), //enviamos el total registros al datatable
-      "iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
-      "aaData"=>$data);
-    echo json_encode($results);
+      "sEcho"=>1, 
+      "iTotalRecords"=>count($array),
+      "iTotalDisplayRecords"=>count($array), 
+      "aaData"=>$array);
+      echo json_encode($results);
+      break;
 
+    case "see_detail_client_sale":
 
-     break;
-
-     case "ver_detalle_cliente_venta":
-
-
-   $datos= $sales->get_detalle_cliente($_POST["numero_venta"]);  
-
-            // si existe el proveedor entonces recorre el array
-        if(is_array($datos)==true and count($datos)>0){
-
-        foreach($datos as $row)
-        {
-          
-          $output["cliente"] = $row["cliente"];
-          $output["numero_venta"] = $row["numero_venta"];
-          $output["cedula_cliente"] = $row["cedula_cliente"];
-          $output["direccion"] = $row["direccion_cliente"];
-          $output["fecha_venta"] = date("d-m-Y", strtotime($row["fecha_venta"]));
-                  
+    $data= $sales->get_detail_client($_POST["sale_number"]);  
+      if(is_array($data)==true and count($data)>0){
+        foreach($data as $row){
+          $output["client"] = $row["client"];
+          $output["sale_number"] = $row["sale_number"];
+          $output["idnumber_client"] = $row["idnumber_client"];
+          $output["address"] = $row["address_client"];
+          $output["sale_date"] = date("d-m-Y", strtotime($row["sale_date"]));
         }
-    
-          
-              echo json_encode($output);
+        echo json_encode($output);
+      } else {
+          $errors[]="No data.";
+      }
+
+      if (isset($errors)){
+        ?>
+        <div class="alert alert-danger" role="alert">
+          <button type="button" class="close" data-dismiss="alert">&timonth;</button>
+            <strong>Error!</strong> 
+            <?php
+              foreach ($errors as $error) {
+                  echo $error;
+                }
+              ?>
+        </div>
+        <?php
+      }
+      break;
+
+    case "see_detail_sale":
+      $data= $sales->get_detail_sales_client($_POST["sale_number"]); 
+      break;
+
+    case "search_quantity_sale":
+      require_once("../models/Product.php");
+      $product= new Product();
 
 
-          } else {
-                 
-                 //si no existe el registro entonces no recorre el array
-                $errors[]="no existe";
-
-          }
-
-
-           //inicio de mensaje de error
-
-        if (isset($errors)){
+      $data=$product->get_product_by_id($_POST["id_product"]);
       
-          ?>
-          <div class="alert alert-danger" role="alert">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <strong>Error!</strong> 
-              <?php
-                foreach ($errors as $error) {
-                    echo $error;
-                  }
-                ?>
-          </div>
-          <?php
-            }
+      // print_r($data); exit();
 
-          //fin de mensaje de error     
-
-
-    break;
-
-     case "ver_detalle_venta":
-
-       $datos= $sales->get_detalle_sales_cliente($_POST["numero_venta"]); 
-
-
-     break;
-
-
- case "consulta_cantidad_venta":
-
-         //selecciona el id del registro
-
-    require_once("../modelos/Productos.php");
-
-  $producto= new Producto();
-
-  $datos=$producto->get_producto_por_id($_POST["id_producto"]);
-
-          // si existe el id del producto entonces recorre el array
-        if(is_array($datos)==true and count($datos)>0){
-
-        foreach($datos as $row)
-        {
-          
-          $stock = $s["stock"] = $row["stock"];
-                 
-                 //consultamos si la cantidad que se va a querer vender es mayor a la cantidad de stock entonces que solo se refleje la cantidad maxima que se encuentre en el stock y que me devuelva ese valor en el campo
-
+      if(is_array($data)==true and count($data)>0){
+        foreach($data as $row){
+          // $stock = $s["stock"] = $row["stock"];
+          $stock = $row["stock"];
           $result = null;
+          $sale_stock=$_POST["sale_quantity"];
 
-          $stock_vender=$_POST["cantidad_vender"];
-
-          //importante:tuve que poner esta condicional para que me funcionara la condicional
-          if($stock_vender>$stock and $stock_vender!=0){
-
-
-                        $result="<h4 class='text-danger'>La cantidad seleccionada es mayor al stock</h4>";
-          
-          }  
-
-          else {
-
-            if($stock_vender==0){
-
-            $result="<h4 class='text-danger'>El campo está vacío</h4>";
-
-             }
-
-              }
-          
-          }//cierre del foreach
-    
-          
-              echo json_encode($result);
-
-
+          if($sale_stock>$stock and $sale_stock!=0){
+            $result="<h4 class='text-danger'> The ammount selected is greater than the stock.</h4>";
           } else {
-                 
-                 //si no existe el registro entonces no recorre el array
-                $errors[]="El producto no existe";
-
+              if($sale_stock==0){
+                $result="<h4 class='text-danger'>The field is empty.</h4>";
+              }
           }
+        }//cierre del foreach
+        echo json_encode($result);
+      } else {
+            $errors[]="The product doesn't exist.";
+      }
 
-
-           //inicio de mensaje de error
-
-        if (isset($errors)){
+      if (isset($errors)){
+        ?>
+        <div class="alert alert-danger" role="alert">
+          <button type="button" class="close" data-dismiss="alert">&timonth;</button>
+            <strong>Error!</strong> 
+            <?php
+              foreach ($errors as $error) {
+                  echo $error;
+                }
+              ?>
+        </div>
+        <?php
+      }
+      break;
       
-          ?>
-          <div class="alert alert-danger" role="alert">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <strong>Error!</strong> 
-              <?php
-                foreach ($errors as $error) {
-                    echo $error;
-                  }
-                ?>
-          </div>
-          <?php
-            }
-
-          //fin de mensaje de error
-
-
-
-     break;
-
-
-      case "cambiar_estado_venta":
-
-
-          $datos=$sales->get_sales_por_id($_POST["id_sales"]);
-
-          // si existe el id de la venta entonces se edita el estado del detalle de la venta
-        if(is_array($datos)==true and count($datos)>0){
-
-                  //cambia el estado de la compra
-          $sales->cambiar_estado($_POST["id_sales"], $_POST["numero_venta"], $_POST["est"]);
-    
-         
+    case "change_status_sale":
+      $data=$sales->get_sales_por_id($_POST["id_sales"]);
+        if(is_array($data)==true and count($data)>0){
+          $sales->cambiar_status($_POST["id_sales"], $_POST["sale_number"], $_POST["status"]);
           } 
+      break;
 
+    case "search_sales_date":
+      $data=$sales->list_search_registers_date($_POST["start_date"], $_POST["end_date"]);
 
-     break;
-
-      case "buscar_sales_fecha":
-          
-     $datos=$sales->lista_busca_registros_fecha($_POST["fecha_inicial"], $_POST["fecha_final"]);
-
-     //Vamos a declarar un array
-   $data= Array();
-
-    foreach($datos as $row)
-      {
+      $array= Array();
+      foreach($data as $row){
         $sub_array = array();
-
-        $est = '';
-        
-         $atrib = "btn btn-danger btn-md estado";
-        if($row["estado"] == 1){
-          $est = 'PAGADO';
-          $atrib = "btn btn-success btn-md estado";
+        $stat = '';
+        $attrib = "btn btn-danger btn-md status";
+        if($row["status"] == 1){
+          $stat = 'PAYED';
+          $attrib = "btn btn-success btn-md status";
         }
         else{
-          if($row["estado"] == 0){
-            $est = 'ANULADO';
+          if($row["status"] == 0){
+            $stat = 'CANCELED';
            
           } 
         }
-
         
-         $sub_array[] = '<button class="btn btn-warning detalle" id="'.$row["numero_venta"].'"  data-toggle="modal" data-target="#detalle_venta"><i class="fa fa-eye"></i></button>';
-               $sub_array[] = date("d-m-Y",strtotime($row["fecha_venta"]));
-         $sub_array[] = $row["numero_venta"];
-         $sub_array[] = $row["cliente"];
-         $sub_array[] = $row["cedula_cliente"];
-         $sub_array[] = $row["vendedor"];
-         $sub_array[] = $row["tipo_pago"];
-         $sub_array[] = $row["moneda"]." ".$row["total"];
+        $sub_array[] = '<button class="btn btn-warning detail" id="'.$row["sale_number"].'"  data-toggle="modal" data-target="#detail_sale"><i class="fa fa-eye"></i></button>';
+        $sub_array[] = date("d-m-Y",strtotime($row["sale_date"]));
+        $sub_array[] = $row["sale_number"];
+        $sub_array[] = $row["client"];
+        $sub_array[] = $row["idnumber_client"];
+        $sub_array[] = $row["seller"];
+        $sub_array[] = $row["payment_type"];
+        $sub_array[] = $row["currency"]." ".$row["total"];
 
-        
-           /*IMPORTANTE: poner \' cuando no sea numero, sino no imprime*/
-                 $sub_array[] = '<button type="button" onClick="cambiarEstado('.$row["id_sales"].',\''.$row["numero_venta"].'\','.$row["estado"].');" name="estado" id="'.$row["id_sales"].'" class="'.$atrib.'">'.$est.'</button>';
+        $sub_array[] = '<button type="button" onClick="changeSaleStatus('.$row["id_sales"].',\''.$row["sale_number"].'\','.$row["status"].');" name="status" id="'.$row["id_sales"].'" class="'.$attrib.'">'.$stat.'</button>';
                 
-        $data[] = $sub_array;
+        $array[] = $sub_array;
       }
 
-
-
-
       $results = array(
-      "sEcho"=>1, //Información para el datatables
-      "iTotalRecords"=>count($data), //enviamos el total registros al datatable
-      "iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
-      "aaData"=>$data);
-    echo json_encode($results);
+      "sEcho"=>1, 
+      "iTotalRecords"=>count($array), 
+      "iTotalDisplayRecords"=>count($array), 
+      "aaData"=>$array);
+      echo json_encode($results);
+      break;
 
-
-     break;
-
-     case "buscar_sales_fecha_mes":
-
-      
-      $datos= $sales->lista_busca_registros_fecha_mes($_POST["mes"],$_POST["ano"]);
-
-
-        //Vamos a declarar un array
-      $data= Array();
-
-        foreach($datos as $row)
-        {
-            $sub_array = array();
-
-            $est = '';
-            
-             $atrib = "btn btn-danger btn-md estado";
-            if($row["estado"] == 1){
-              $est = 'PAGADO';
-              $atrib = "btn btn-success btn-md estado";
-            }
-            else{
-              if($row["estado"] == 0){
-                $est = 'ANULADO';
-               
-              } 
-          }
-
-        
-       
-      $sub_array[] = '<button class="btn btn-warning detalle" id="'.$row["numero_venta"].'"  data-toggle="modal" data-target="#detalle_venta"><i class="fa fa-eye"></i></button>';
-         $sub_array[] = date("d-m-Y", strtotime($row["fecha_venta"]));
-         $sub_array[] = $row["numero_venta"];
-         $sub_array[] = $row["cliente"];
-         $sub_array[] = $row["cedula_cliente"];
-         $sub_array[] = $row["vendedor"];
-         $sub_array[] = $row["tipo_pago"];
-         $sub_array[] = $row["total"];
-
-        
-           /*IMPORTANTE: poner \' cuando no sea numero, sino no imprime*/
-                 $sub_array[] = '<button type="button" onClick="cambiarEstado('.$row["id_sales"].',\''.$row["numero_venta"].'\','.$row["estado"].');" name="estado" id="'.$row["id_sales"].'" class="'.$atrib.'">'.$est.'</button>';
-                
-        $data[] = $sub_array;
-        
+    case "search_sales_date_month":
+      $data= $sales->list_search_registers_date_month($_POST["month"],$_POST["year"]);
+      $array= Array();
+      foreach($data as $row){
+        $sub_array = array();
+        $stat = '';
+         $attrib = "btn btn-danger btn-md status";
+        if($row["status"] == 1){
+          $stat = 'PAYED';
+          $attrib = "btn btn-success btn-md status";
         }
+        else{
+          if($row["status"] == 0){
+            $stat = 'CANCELED';
+          } 
+        }
+         
+        $sub_array[] = '<button class="btn btn-warning detail" id="'.$row["sale_number"].'"  data-toggle="modal" data-target="#detail_sale"><i class="fa fa-eye"></i></button>';
+        $sub_array[] = date("d-m-Y", strtotime($row["sale_date"]));
+        $sub_array[] = $row["sale_number"];
+        $sub_array[] = $row["client"];
+        $sub_array[] = $row["idnumber_client"];
+        $sub_array[] = $row["seller"];
+        $sub_array[] = $row["payment_type"];
+        $sub_array[] = $row["total"];
 
+        $sub_array[] = '<button type="button" onClick="changeSaleStatus('.$row["id_sales"].',\''.$row["sale_number"].'\','.$row["status"].');" name="status" id="'.$row["id_sales"].'" class="'.$attrib.'">'.$stat.'</button>';
+                  
+        $array[] = $sub_array;
+      }
 
       $results = array(
-      "sEcho"=>1, //Información para el datatables
-      "iTotalRecords"=>count($data), //enviamos el total registros al datatable
-      "iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
-      "aaData"=>$data);
-    echo json_encode($results);
+      "sEcho"=>1, 
+      "iTotalRecords"=>count($array), 
+      "iTotalDisplayRecords"=>count($array),
+      "aaData"=>$array);
+      echo json_encode($results);
+      break;
 
-
-     break;
-
-
-
-}
+  }
+?>  

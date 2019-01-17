@@ -3,3 +3,12 @@
 .sizeModal{
   width: 70%;
 }
+
+    
+.red{
+    border-color:#a94442;
+}
+
+.hide_button{
+       display:none;
+}

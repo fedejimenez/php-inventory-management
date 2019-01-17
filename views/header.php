@@ -208,7 +208,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="sales.php"><i class="fa fa-circle-o"></i>New Sale</a></li>
-            <li><a href="sales_view.php"><i class="fa fa-circle-o"></i>Show Sales</a></li>
+            <li><a href="show_sales.php"><i class="fa fa-circle-o"></i>Show Sales</a></li>
             <li><a href="search_sales_date.php"><i class="fa fa-circle-o"></i>Search Sales by Date</a></li>
             <li><a href="search_sales_month.php"><i class="fa fa-circle-o"></i>Saerch Sales by Month</a></li>
           </ul> 

@@ -4,7 +4,7 @@
 
   if(isset($_SESSION["id_user"])){
     require_once("../models/Sale.php");
-    $sale = new Sales();
+    $sale = new Sale();
     
 ?>
 
@@ -49,7 +49,7 @@
                   <label for="" class="col-lg-3 control-label">Sale Number
                   </label>
                   <div class="col-lg-9">
-                    <input type="text" class="form-control" id="sale_number" name="sale_number" value="<?php //$code=$sale->sale_number();?>"  readonly>
+                    <input type="text" class="form-control" id="sale_number" name="sale_number" value="<?php $code=$sale->sale_number();?>"  readonly>
                   </div>
                 </div>
 
@@ -116,9 +116,9 @@
                       </h4>
                       <select name="payment_type" class="col-lg-offset-3 col-xs-offset-2" id="payment_type" class="select" maxlength="10" >
                         <option value="">Select Payment Type</option>
-                        <option value="CHEQUE">Check</option>
-                        <option value="EFECTIVO">Cash</option>
-                        <option value="TRANSFERENCIA">Bank Transfer</option>
+                        <option value="CHECK">Check</option>
+                        <option value="CASH">Cash</option>
+                        <option value="BANK TRANSFER">Bank Transfer</option>
                       </select>
                     </div>
                   </div>

@@ -226,7 +226,7 @@ function addDetails(id_product,product, status){
             
                       var obj = {
                         quantity : 1,
-                        codProd  : id_product,
+                        id_product  : id_product,
                         codCat   : data.id_category,
                         product : data.product,
                         currency   : data.currency,
@@ -238,8 +238,7 @@ function addDetails(id_product,product, status){
                       };
                     
                       details.push(obj);
-                      listDd
-                   etails();
+                      listDetails();
 
                       $('#products_listModal').modal("hide");
 
@@ -510,7 +509,7 @@ function addDetailsSales(id_product,product,status){
                     
                       var obj = {
                         quantity : 1,
-                        codProd  : id_product,
+                        id_product  : id_product,
                         product : data.product,
                         currency   : data.currency,
                         price   : data.sale_price,
@@ -582,8 +581,8 @@ function setQuantity(event, obj, idx){
 
 function setQuantityAjax(event, obj, idx){
   event.preventDefault();
-  var id_product = details[idx].codProd;
-  var quantity_sale = details[idx].quantity = parseInt(obj.value);
+  var id_product = details[idx].id_product;
+  var sale_quantity = details[idx].quantity = parseInt(obj.value);
   var stock = details[idx].stock;
       //alert(idx);
       //alert(quantity_sale);
@@ -593,21 +592,21 @@ function setQuantityAjax(event, obj, idx){
   $.ajax({
          url:"../ajax/sale.php?op=search_quantity_sale",
          method:"POST",
-         data:{id_product:id_product, quantity_sale:quantity_sale},
+         data:{id_product:id_product, sale_quantity:sale_quantity},
          dataType:"json",
 
          success:function(data){
               //$("#quantity_"+idx).val(data);
               console.log(data);
               $("#results_sales_ajax").html(data);
-              if(quantity_sale=="0" || isNaN(quantity_sale)==true || quantity_sale>stock){
+              if(sale_quantity=="0" || isNaN(sale_quantity)==true || sale_quantity>stock){
                 $("#quantity_"+idx).addClass("red");
                 $(".btn_product").removeAttr("data-target");
                 $("#btn_send").addClass("hide_button");
               } else {
-                   $("#quantity_"+idx).removeClass("red");
-                   $(".btn_product").attr({"data-target":"#list_products_sales_Modal"});
-                   $("#btn_send").removeClass("hide_button");
+                  $("#quantity_"+idx).removeClass("red");
+                  $(".btn_product").attr({"data-target":"#list_products_sales_Modal"});
+                  $("#btn_send").removeClass("hide_button");
               }
          }, 
          error:function(e){
@@ -638,15 +637,15 @@ function recalculate(idx){
    
   ammountFinal = details[idx].currency+" "+ammount;
   $('#ammount'+idx).html(ammountFinal);
-  calculateTotales();
+  calculateTotals();
 }
 
-function calculateTotales(){
+function calculateTotals(){
   var subtotal = 0;
   var total = 0;
   var subtotalFinal = 0;
   var totalFinal = 0;
-  var tax = 20;
+  var tax = 10;
   var igv = (tax/100);
 
 for(var i=0; i<details.length; i++){
@@ -682,7 +681,7 @@ function  deleteProduct(event, idx){
   listDetailsSales();
 }
 
-function registerrVenta(){
+function registerSale(){
     
   var sale_number = $("#sale_number").val();
   var idnumber = $("#idnumber").val();
@@ -708,6 +707,7 @@ function registerrVenta(){
         console.log(z);
       },
       success:function(data){
+        console.log(data);
         var idnumber = $("#idnumber").val("");
         var name = $("#name").val("");
         var lastname = $("#lastname").val("");

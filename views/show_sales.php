@@ -1,80 +1,53 @@
 
 <?php
 
-   require_once("../config/conexion.php");
-
-    if(isset($_SESSION["id_usuario"])){
-        
+  require_once("../config/connection.php");
+  if(isset($_SESSION["id_user"])){
 
 ?>
-
-
-<!-- INICIO DEL HEADER - LIBRERIAS -->
 <?php require_once("header.php");?>
-
-<!-- FIN DEL HEADER - LIBRERIAS -->
-
-
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    
-   
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-       Consulta de Ventas
-       
+        Sales - Search
       </h1>
-      
     </section>
-
     <!-- Main content -->
     <section class="content">
-    
-   <div id="resultados_ajax"></div>
-
-     <div class="panel panel-default">
-        
+      <div id="resultados_ajax"></div>
+      <div class="panel panel-default">
         <div class="panel-body">
-
-         <div class="btn-group text-center">
-          <a href="ventas.php" id="add_button" class="btn btn-primary btn-lg" ><i class="fa fa-plus" aria-hidden="true"></i> Nueva Venta</a>
-         </div>
-
+          <div class="btn-group text-center">
+            <a href="sales.php" id="add_button" class="btn btn-primary btn-lg" ><i class="fa fa-plus" aria-hidden="true"></i> New Sale</a>
+          </div>
        </div>
       </div>
 
-
-       <!--VISTA MODAL PARA VER DETALLE VENTA EN VISTA MODAL-->
-     <?php require_once("modal/detalle_venta_modal.php");?>
-    
-   
+      <!-- MODAL FOR SALES DETAILS-->
+      <?php require_once("modal/sale_detail_modal.php");?>
       <div class="row">
         <div class="col-xs-12">
-          
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Lista de Ventas</h3>
+              <h3 class="box-title">Sales List</h3>
             </div>
-            <!-- /.box-header -->
             <div class="box-body">
-             <table id="ventas_data" class="table table-bordered table-striped">
+              <table id="sales_data" class="table table-bordered table-striped">
                 <thead>
-                <tr>
-                  <th>Ver Detalle</th>
-                  <th>Fecha Venta</th>
-                  <th>Número Venta</th>
-                  <th>Cliente</th>
-                  <th>Cédula Cliente</th>
-                  <th>Vendedor</th>
-                  <th>Tipo Pago</th>
-                  <th>Total</th>
-                  <th>Estado</th>
-                  
-                 
-                </tr>
+                  <tr>
+                    <th>See Details</th>
+                    <th>Sale DAte</th>
+                    <th>Sale Number</th>
+                    <th>Client</th>
+                    <th>Client Id Number</th>
+                    <th>Seller</th>
+                    <th>Payment Type</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                  </tr>
                 </thead>
-                
               </table>
             </div>
             <!-- /.box-body -->
@@ -89,19 +62,13 @@
   </div>
   <!-- /.content-wrapper -->
 
+<?php require_once("footer.php");?>
 
-   <?php require_once("footer.php");?>
-
-    <!--AJAX VENTAS-->
-<script type="text/javascript" src="js/ventas.js"></script>
-
+<script type="text/javascript" src="js/sale.js"></script>
 
 <?php
-   
- } else {
-
-         header("Location:".Conectar::ruta()."vistas/index.php");
-
-     }
+  } else {
+        header("Location:".Connect::rutes()."views/index.php");
+  }
 
 ?>
