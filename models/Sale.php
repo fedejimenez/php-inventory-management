@@ -397,7 +397,7 @@
       }
     }
 
-    public function list_search_registers_data($start_date, $end_date){
+    public function list_search_registers_date($start_date, $end_date){
       $connect= parent::connection();
 
       $start_date = $_POST["start_date"];

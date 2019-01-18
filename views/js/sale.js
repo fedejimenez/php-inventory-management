@@ -115,7 +115,7 @@ function changeSaleStatus(id_sales, sale_number, status){
         cache: false,
         
         success:function(data){
-          console.log(data);
+          // console.log(data);
           $('#sales_data').DataTable().ajax.reload();
           $('#sales_date_data').DataTable().ajax.reload();
           $('#sales_date_month_data').DataTable().ajax.reload();
@@ -190,7 +190,7 @@ $(document).on("click","#btn_sale_date_month", function(){
   var year= $("#year").val();
 
   if(month!="" && year!=""){
-    var table_sales_month= $('#sales_fecha_month_data').DataTable({
+    var table_sales_month= $('#sales_date_month_data').DataTable({
       "aProcessing": true,
       "aServerSide": true,
       dom: 'Bfrtip',

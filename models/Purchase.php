@@ -59,7 +59,7 @@
       foreach ($details as $k => $v) {
         // variables from array details  
         $quantity = $v->quantity;
-        $codProd = $v->codProd;
+        $id_product = $v->id_product;
         $codCat = $v->codCat;
         $product = $v->product;
         $currency = $v->currency;
@@ -70,7 +70,7 @@
         $status = $v->status;
 
         //echo "***************";
-        //echo "Cant: ".$quantity." codProd: ".$codProd. " Producto: ". $product. " currency: ".$currency. " price: ".$price. " discount: ".$discount. " status: ".$status;
+        //echo "Cant: ".$quantity." id_product: ".$id_product. " Producto: ". $product. " currency: ".$currency. " price: ".$price. " discount: ".$discount. " status: ".$status;
 
        $purchase_number = $_POST["purchase_number"];
        $idnumber_supplier = $_POST["idnumber"];
@@ -96,7 +96,7 @@
 
         $sql->bindValue(1,$purchase_number);
         $sql->bindValue(2,$idnumber_supplier);
-        $sql->bindValue(3,$codProd);
+        $sql->bindValue(3,$id_product);
         $sql->bindValue(4,$product);
         $sql->bindValue(5,$currency);
         $sql->bindValue(6,$price);
@@ -120,7 +120,7 @@
        
         $sql3=$connect->prepare($sql3);
 
-        $sql3->bindValue(1,$codProd);
+        $sql3->bindValue(1,$id_product);
         $sql3->execute();
 
         $result = $sql3->fetchAll(PDO::FETCH_ASSOC);
@@ -141,7 +141,7 @@
                  ";
           $sql4 = $connect->prepare($sql4);
           $sql4->bindValue(1,$quantity_total);
-          $sql4->bindValue(2,$codProd);
+          $sql4->bindValue(2,$id_product);
           $sql4->execute();
 
         } 
