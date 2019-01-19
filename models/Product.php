@@ -289,12 +289,12 @@
       return $result= $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function get_product_por_id_detail_purchase($id_product){
+    public function get_product_by_id_detail_purchase($id_product){
       $connect=parent::connection();
       parent::set_names();
       $sql="select p.id_product, p.product, c.id_product, c.product as product_purchases
             from product p 
-            INNER JOIN detalle_compras c ON p.id_product = c.id_product
+            INNER JOIN purchases_details c ON p.id_product = c.id_product
               where p.id_product=?
             ";
        $sql=$connect->prepare($sql);
@@ -308,7 +308,7 @@
       parent::set_names();
       $sql="select p.id_product, p.product, v.id_product, v.product as product_sales
             from product p 
-            INNER JOIN detail_sales v ON p.id_product = v.id_product
+            INNER JOIN sales_details v ON p.id_product = v.id_product
             where p.id_product=?
             ";
       $sql=$connect->prepare($sql);

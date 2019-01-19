@@ -672,7 +672,7 @@ $('#total_sale').html(totalFinal);
 }
 
 
-function  deleteProduct(event, idx){
+function deleteProduct(event, idx){
   event.preventDefault();
   details[idx].status = 0;
 
@@ -726,11 +726,23 @@ function registerSale(){
 }
 
 //*****************************************************************************
-// function explode(){
 
-//       location.reload();
-// }
+function deleteProduct(id_product){
+  bootbox.confirm("Are you sure you want to delete this Product?", function(result){
+    if(result){
+      $.ajax({
+        url:"../ajax/product.php?op=delete_product",
+        method:"POST",
+        data:{id_product:id_product},
 
-
+        success:function(data){
+          console.log(data);
+          $("#results_ajax").html(data);
+          $("#product_data").DataTable().ajax.reload();
+        }
+      });
+    }
+  });//bootbox
+}
 
 init();

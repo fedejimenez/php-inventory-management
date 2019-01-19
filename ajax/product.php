@@ -409,6 +409,53 @@
 
       $sale->add_details_sales();
       break;
-  }
+    
+    case "delete_product":
+      $data= $products->get_product_by_id($_POST["id_product"]);
+      $product_detail_purchase=$products->get_product_by_id_detail_purchase($_POST["id_product"]);
+      $product_detail_sale=$products->get_product_by_id_detail_sale($_POST["id_product"]);
+            
+      if(is_array($data)==true and count($data)>0 and is_array($product_detail_purchase)==true and count($product_detail_purchase)==0 and is_array($product_detail_sale)==true and count($product_detail_sale)==0){
+              
+        $products->delete_product($_POST["id_product"]);
+          
+        $messages[]="Product successfuly deleted";
+      } 
+        else {
+          $errors[]="This product has stock or has associated purchases/sales. Can not be deleted!";
+      }
+
+      if (isset($messages)){
+        ?>
+        <div class="alert alert-success" role="alert">
+          <button type="button" class="close" data-dismiss="alert">&times;
+          </button>
+          <strong>Yay!</strong>
+          <?php
+            foreach ($messages as $message) {
+              echo $message;
+            }
+          ?>
+        </div>
+        <?php
+      }
+
+      if (isset($errors)){
+        ?>
+        <div class="alert alert-danger" role="alert">
+          <button type="button" class="close" data-dismiss="alert">&times;
+          </button>
+          <strong>Error!</strong> 
+          <?php
+            foreach ($errors as $error) {
+                echo $error;
+            }
+          ?>
+        </div>
+      <?php
+      }
+
+      break;
+    }
 
 ?> 

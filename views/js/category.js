@@ -137,7 +137,7 @@ function changeStatusCategory(id_category, status){
 }
 
 function deleteCategory(id_category){
-  bootbox.confirm("¿Are you sure you want to delete this Category?", function(result){
+  bootbox.confirm("Are you sure you want to delete this Category?", function(result){
     if(result){
       $.ajax({
         url:"../ajax/category.php?op=delete",
