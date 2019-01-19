@@ -223,4 +223,22 @@ function add_supplier_register(id_supplier,status){
   })
 }
 
+function deleteSupplier(id_supplier){
+  bootbox.confirm("Are you sure you want to delete this Supplier?", function(result){
+    if(result){
+      $.ajax({
+        url:"../ajax/supplier.php?op=delete_supplier",
+        method:"POST",
+        data:{id_supplier:id_supplier},
+
+        success:function(data){
+          console.log(data);
+          $("#results_ajax").html(data);
+          $("#supplier_data").DataTable().ajax.reload();
+        }
+      });
+    }
+  });//bootbox
+}
+
 init();

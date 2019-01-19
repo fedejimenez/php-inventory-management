@@ -1,10 +1,8 @@
 <?php
 
-   //llamo a la connection de la base de data 
   require_once("../config/connection.php");
-  //llamo al modelo suppliers
   require_once("../models/Supplier.php");
-
+  require_once("../models/Purchase.php");
   
   $suppliers = new Supplier();
 
@@ -210,7 +208,6 @@
     break;
 
   case "search_supplier";
-
     $data=$suppliers->get_supplier_by_id_status($_POST["id_supplier"],$_POST["status"]);
 
     if(is_array($data)==true and count($data)>0){
@@ -227,6 +224,52 @@
           $output["error"]="This Supplier is INACTIVE, try a different one";
     }
     echo json_encode($output);
+    break;
+
+  case "delete_supplier":
+    $purchases = new Purchase();
+    $purchase = $purchases->get_purchases_by_id_supplier($_POST["id_supplier"]);
+    $detail_purchase= $purchases->get_detail_purchases_by_id_supplier($_POST["id_supplier"]);
+    
+    if(is_array($purchase)==true and count($purchase)>0 && is_array($detail_purchase)==true and count($detail_purchase)>0)
+    {
+      $errors[]="This supplier has an associated Purchase. Can not be deleted!";
+    }
+      else{
+        $data= $suppliers->get_supplier_by_id($_POST["id_supplier"]);
+        if(is_array($data)==true and count($data)>0){
+          $suppliers->delete_supplier($_POST["id_supplier"]);
+          $messages[]="Supplier successfully deleted!";
+        }
+    }
+
+    if (isset($messages)){
+      ?>
+      <div class="alert alert-success" role="alert">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>Yay!</strong>
+          <?php
+            foreach ($messages as $message) {
+                echo $message;
+              }
+            ?>
+      </div>
+      <?php
+    }
+
+    if (isset($errors)){
+      ?>
+      <div class="alert alert-danger" role="alert">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>Error!</strong> 
+          <?php
+            foreach ($errors as $error) {
+                echo $error;
+              }
+            ?>
+      </div>
+      <?php
+      }
     break;
   }
 

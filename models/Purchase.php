@@ -69,23 +69,15 @@
         //$total = $v->total;
         $status = $v->status;
 
-        //echo "***************";
-        //echo "Cant: ".$quantity." id_product: ".$id_product. " Producto: ". $product. " currency: ".$currency. " price: ".$price. " discount: ".$discount. " status: ".$status;
-
-       $purchase_number = $_POST["purchase_number"];
-       $idnumber_supplier = $_POST["idnumber"];
-       $supplier = $_POST["corporate_name"];
-       $address = $_POST["address"];
-       $total = $_POST["total"];
-       $purchaser = $_POST["purchaser"];
-       $payment_type = $_POST["payment_type"];
-       $id_user = $_POST["id_user"];
-       $id_supplier = $_POST["id_supplier"];
-
-        /*$sql="insert into detalle_compra
-        values(null,'".$purchase_number."','".$product."','".$price."','".$quantity."','".$discount."','".$idnumber_supplier."','".$purchase_date."','".$status."');";
-
-        echo $sql;*/
+        $purchase_number = $_POST["purchase_number"];
+        $idnumber_supplier = $_POST["idnumber"];
+        $supplier = $_POST["corporate_name"];
+        $address = $_POST["address"];
+        $total = $_POST["total"];
+        $purchaser = $_POST["purchaser"];
+        $payment_type = $_POST["payment_type"];
+        $id_user = $_POST["id_user"];
+        $id_supplier = $_POST["id_supplier"];
 
         $sql="insert into purchases_details
         values(null,?,?,?,?,?,?,?,?,?,now(),?,?,?,?);";
@@ -464,6 +456,42 @@
       $sql->bindValue(1,$date);
       $sql->execute();
       return $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function get_purchases_by_id_supplier($id_supplier){
+      $connect= parent::connection();
+      $sql="select * from purchases where id_supplier=?";
+      $sql=$connect->prepare($sql);
+      $sql->bindValue(1, $id_supplier);
+      $sql->execute();
+      return $result= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function get_detail_purchases_by_id_supplier($id_supplier){
+      $connect= parent::connection();
+      $sql="select * from purchases_details where id_supplier=?";
+      $sql=$connect->prepare($sql);
+      $sql->bindValue(1, $id_supplier);
+      $sql->execute();
+      return $result= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function get_purchases_by_id_user($id_user){
+      $connect= parent::connection();
+      $sql="select * from purchases where id_user=?";
+      $sql=$connect->prepare($sql);
+      $sql->bindValue(1, $id_user);
+      $sql->execute();
+      return $result= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function get_detail_purchases_by_id_user($id_user){
+      $connect= parent::connection();
+      $sql="select * from purchases_details where id_user=?";
+      $sql=$connect->prepare($sql);
+      $sql->bindValue(1, $id_user);
+      $sql->execute();
+      return $result= $sql->fetchAll(PDO::FETCH_ASSOC);
     }
   }
 
