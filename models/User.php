@@ -190,8 +190,42 @@
       return $result=$sql->fetchAll();
     }
 
+    public function delete_user($id_user){
+      $connect=parent::connection();
+      $sql="delete from users where id_user=?";
+      $sql=$connect->prepare($sql);
+      $sql->bindValue(1,$id_user);
+      $sql->execute();
+      return $result=$sql->fetch();
+    }
+ 
+    public function get_user_by_id_purchases($id_user){
+      $connect=parent::connection();
+      parent::set_names();
+      $sql="select u.id_user,c.id_user
+            from users u 
+            INNER JOIN purchases c ON u.id_user=c.id_user
+            where u.id_user=?
+            ";
+      $sql=$connect->prepare($sql);
+      $sql->bindValue(1,$id_user);
+      $sql->execute();
+      return $result=$sql->fetchAll(PDO::FETCH_ASSOC);
+    }
 
-
+    public function get_user_by_id_sales($id_user){
+      $connect=parent::connection();
+      parent::set_names();
+      $sql="select u.id_user,v.id_user
+            from users u 
+            INNER JOIN sales v ON u.id_user=v.id_user
+            where u.id_user=?
+            ";
+      $sql=$connect->prepare($sql);
+      $sql->bindValue(1,$id_user);
+      $sql->execute();
+      return $result=$sql->fetchAll(PDO::FETCH_ASSOC);
+    }
   } 
 
 ?>

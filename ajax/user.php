@@ -2,6 +2,13 @@
   // connect to DB and call User model
   require_once("../config/connection.php");
   require_once("../models/User.php");
+  require_once("../models/Client.php");
+  require_once("../models/Category.php");
+  require_once("../models/Product.php");
+  require_once("../models/Purchase.php");
+  require_once("../models/Sale.php");
+  require_once("../models/Company.php");
+  require_once("../models/Supplier.php");
 
   // create user object
   $users = new User();
@@ -195,6 +202,73 @@
       
       echo json_encode($results);
       break;
+
+    case "delete_user":
+      $product = new Product();
+      $category = new Category();
+      $client = new Client();
+      $purchase =  new Purchase();
+      $company = new Company();
+      $supplier = new Supplier();
+      $sale = new Sale();
+      $product= $product->get_product_by_id_user($_POST["id_user"]);
+      $cat= $category->get_category_by_id_user($_POST["id_user"]);
+      $cli= $client->get_client_by_id_user($_POST["id_user"]);
+      $pur= $purchase->get_purchases_by_id_user($_POST["id_user"]);
+      $detail_comp= $purchase->get_detail_purchases_by_id_user($_POST["id_user"]);
+      $comp= $company->get_company_by_id_user($_POST["id_user"]);    
+      $sup= $supplier->get_supplier_by_id_user($_POST["id_user"]); 
+      $sales= $sale->get_sales_by_id_user($_POST["id_user"]);
+      $detail_sale= $sale->get_detail_sales_by_id_user($_POST["id_user"]); 
+      if(
+        is_array($product)==true and count($product)>0 or 
+        is_array($cat)==true and count($cat)>0 or 
+        is_array($cli)==true and count($cli)>0 or 
+        is_array($pur)==true and count($pur)>0 or 
+        is_array($detail_comp)==true and count($detail_comp)>0 or 
+        is_array($comp)==true and count($comp)>0 or 
+        is_array($sup)==true and count($sup)>0 or 
+        is_array($sales)==true and count($sales)>0 or 
+        is_array($detail_sale)==true and count($detail_sale)>0)
+      {
+        $errors[]="User has associated Products/Sales. Can not be deleted!";
+      }
+      else{
+        $data= $users->get_user_by_id($_POST["id_user"]);
+        if(is_array($data)==true and count($data)>0){
+          $users->delete_user($_POST["id_user"]);
+          $messages[]="User succsessfully deleted!";
+        }
+      }
+
+      if (isset($messages)){
+        ?>
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Yay!</strong>
+            <?php
+              foreach ($messages as $message) {
+                  echo $message;
+                }
+              ?>
+        </div>
+        <?php
+      }
+
+      if(isset($errors)){
+        ?>
+        <div class="alert alert-danger" role="alert">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>Error!</strong> 
+          <?php
+            foreach ($errors as $error) {
+                echo $error;
+              }
+          ?>
+        </div>
+        <?php
+      }
+    break;
   }
 
 

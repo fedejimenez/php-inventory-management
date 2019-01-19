@@ -134,7 +134,7 @@
       return $result=$sql->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function get_client_por_id_user($id_user){
+    public function get_client_by_id_user($id_user){
       $connect= parent::connection();
       $sql="select * from clients where id_user=?";
       $sql=$connect->prepare($sql);

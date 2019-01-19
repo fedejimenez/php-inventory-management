@@ -157,9 +157,32 @@ function changeStatus(id_user, status){
         data:{id_user:id_user, status:status},
         success: function(data){
           $("#user_data").DataTable().ajax.reload();
+        }, 
+        error:function(e){
+          console.log(e)
         }
       });
 
+    }
+  });
+}
+
+function deleteUser(id_user){
+  bootbox.confirm("Are you sure you want to delete this User?", function(result){
+    if(result){
+      $.ajax({
+        url:"../ajax/user.php?op=delete_user",
+        method:"POST",
+        data:{id_user:id_user},
+        success:function(data){
+          console.log(data);
+          $("#results_ajax").html(data);
+          $("#user_data").DataTable().ajax.reload();
+        }, 
+        error:function(e){
+          console.log(e)
+        }
+      });
     }
   });
 }
