@@ -429,4 +429,39 @@
       return $result = $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function get_sales_by_id_client($id_client){
+      $connect= parent::connection();
+      $sql="select * from sales where id_client=?";
+      $sql=$connect->prepare($sql);
+      $sql->bindValue(1, $id_client);
+      $sql->execute();
+      return $result= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function get_detail_sales_by_id_client($id_client){
+      $connect= parent::connection();
+      $sql="select * from sales_details where id_client=?";
+      $sql=$connect->prepare($sql);
+      $sql->bindValue(1, $id_client);
+      $sql->execute();
+      return $result= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function get_sales_by_id_user($id_user){
+      $connect= parent::connection();
+      $sql="select * from sales where id_user=?";
+      $sql=$connect->prepare($sql);
+      $sql->bindValue(1, $id_user);
+      $sql->execute();
+      return $result= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function get_detail_sales_by_id_user($id_user){
+      $connect= parent::connection();
+      $sql="select * from sales_details where id_user=?";
+      $sql=$connect->prepare($sql);
+      $sql->bindValue(1, $id_user);
+      $sql->execute();
+      return $result= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
   }

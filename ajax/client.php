@@ -2,6 +2,7 @@
 
   require_once("../config/connection.php");
   require_once("../models/Client.php");
+  require_once("../models/Sale.php");
 
   $clients = new Client();
 
@@ -202,11 +203,8 @@
       break;
 
     case "search_client":
-
       $data=$clients->get_client_by_id_status($_POST["id_client"],$_POST["status"]);
-
       if(is_array($data)==true and count($data)>0){
-
         foreach($data as $row){
           $output["idnumber_client"] = $row["idnumber_client"];
           $output["name"] = $row["name_client"];
@@ -219,6 +217,49 @@
       }
       echo json_encode($output);
       break;
+
+    case "delete_client":
+      $sales = new Sale();
+      $sale= $sales->get_sales_by_id_client($_POST["id_client"]);
+      $detail_sale= $sales->get_detail_sales_by_id_client($_POST["id_client"]);
+      if(is_array($sale)==true and count($sale)>0 && is_array($detail_sale)==true and count($detail_sale)>0){
+        $errors[]="This Client has associated Sales. Can not be deleted!";
+      }
+        else{
+          $data= $clients->get_client_by_id($_POST["id_client"]);
+          if(is_array($data)==true and count($data)>0){
+            $clients->delete_client($_POST["id_client"]);
+            $messages[]="Client succesfully deleted";
+          }
+      }
+
+     if (isset($messages)){
+        ?>
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Yay!</strong>
+            <?php
+              foreach ($messages as $message) {
+                  echo $message;
+                }
+              ?>
+        </div>
+        <?php
+      }
+      
+      if (isset($errors)){
+      ?>
+      <div class="alert alert-danger" role="alert">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>Error!</strong> 
+          <?php
+            foreach ($errors as $error) {
+                echo $error;
+              }
+            ?>
+      </div>
+      <?php
+      }
+     break;
    }
-  
 ?>

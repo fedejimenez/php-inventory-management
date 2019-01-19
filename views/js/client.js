@@ -224,4 +224,21 @@ function addClientRegister(id_client,status){
   })
 }
 
+function deleteClient(id_client){
+  bootbox.confirm("Are you sure you want to delete this Client?", function(result){
+    if(result){
+      $.ajax({
+        url:"../ajax/client.php?op=delete_client",
+        method:"POST",
+        data:{id_client:id_client},
+        success:function(data){
+          console.log(data);
+          $("#results_ajax").html(data);
+          $("#client_data").DataTable().ajax.reload();
+        }
+      });
+    }
+  });//bootbox
+}
+
 init();
