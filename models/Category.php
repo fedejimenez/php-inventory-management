@@ -4,6 +4,15 @@
 
   class Category extends Connect{
     
+    public function get_rows_categories(){
+      $connect= parent::connection();
+      $sql="select * from category";
+      $sql=$connect->prepare($sql);
+      $sql->execute();
+      $result= $sql->fetchAll(PDO::FETCH_ASSOC);
+      return $sql->rowCount();
+    }
+
     public function get_categories(){
       $connect=parent::connection();
       parent::set_names();

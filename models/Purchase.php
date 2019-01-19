@@ -2,8 +2,17 @@
   require_once("../config/connection.php");
       
   class Purchase extends Connect{
-    public function get_purchases(){
 
+    public function get_rows_purchases(){
+      $connect= parent::connection();
+      $sql="select * from purchases";
+      $sql=$connect->prepare($sql);
+      $sql->execute();
+      $result= $sql->fetchAll(PDO::FETCH_ASSOC);
+      return $sql->rowCount();
+    }
+
+    public function get_purchases(){
       $connect= parent::connection();
       $sql="select * from purchases";
       $sql=$connect->prepare($sql);
@@ -12,7 +21,6 @@
     }
 
     public function get_purchases_by_id($id_purchases){
-
       $connect= parent::connection();
       $sql="select * from purchases where id_purchases=?";
       $sql=$connect->prepare($sql);
@@ -22,16 +30,12 @@
     }
              
     public function purchase_number(){
-
       $connect=parent::connection();
       parent::set_names();
-        
       $sql="select purchase_number from purchases_details;";
       $sql=$connect->prepare($sql);
-
       $sql->execute();
       $result=$sql->fetchAll(PDO::FETCH_ASSOC);
-
       foreach($result as $k=>$v){
         $purchase_number["number"]=$v["purchase_number"];
       }

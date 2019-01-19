@@ -4,6 +4,16 @@
   require_once("../config/connection.php");
 
   class Sale extends Connect{
+
+    public function get_rows_sales(){
+      $connect= parent::connection();
+      $sql="select * from sales";
+      $sql=$connect->prepare($sql);
+      $sql->execute();
+      $result= $sql->fetchAll(PDO::FETCH_ASSOC);
+      return $sql->rowCount();
+    }
+
     public function get_sales(){
       $connect= parent::connection();
       $sql="select * from sales";

@@ -4,6 +4,15 @@
 
   class Supplier extends Connect{
 
+    public function get_rows_suppliers(){
+      $connect= parent::connection();
+      $sql="select * from supplier";
+      $sql=$connect->prepare($sql);
+      $sql->execute();
+      $result= $sql->fetchAll(PDO::FETCH_ASSOC);
+      return $sql->rowCount();
+    }
+
     public function get_suppliers(){
       $connect=parent::connection();
       parent::set_names();

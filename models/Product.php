@@ -3,47 +3,42 @@
   require_once("../config/connection.php");
 
   class Product extends Connect{
-          
-    public function get_products(){
-
+    
+    public function get_rows_products(){
       $connect= parent::connection();
-         
-      $sql= "select 
-              p.id_product, p.id_category, p.product, p.package, p.unit,p.currency, p.buying_price, p.sale_price, p.stock, p.status, p.image, p.expiration_date as expiration_date,c.id_category, c.category as category
-             
-              from product p 
-                
-              INNER JOIN category c ON p.id_category=c.id_category
-             ";
-      
+      $sql="select * from product";
       $sql=$connect->prepare($sql);
       $sql->execute();
+      $result= $sql->fetchAll(PDO::FETCH_ASSOC);
+      return $sql->rowCount();
+    }
 
-
+    public function get_products(){
+      $connect= parent::connection();
+      $sql= "select 
+              p.id_product, p.id_category, p.product, p.package, p.unit,p.currency, p.buying_price, p.sale_price, p.stock, p.status, p.image, p.expiration_date as expiration_date,c.id_category, c.category as category
+              from product p 
+              INNER JOIN category c ON p.id_category=c.id_category
+             ";
+      $sql=$connect->prepare($sql);
+      $sql->execute();
       return $result= $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function get_products_in_sales(){
       $connect= parent::connection();
       $sql= "select p.id_product, p.id_category, p.product, p.package, p.unit, p.currency, p.buying_price, p.sale_price, p.stock, p.status, p.image, p.expiration_date as expiration_date, c.id_category, c.category as category
-           
         from product p 
-              
         INNER JOIN category c ON p.id_category=c.id_category
-
         where p.stock > 0 and p.status='1'
-
         ";
-
       $sql=$connect->prepare($sql);
       $sql->execute();
-
       return $result= $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /* route views/upload*/
     public function upload_image() {
-
       if(isset($_FILES["product_image"])){
         $extension = explode('.', $_FILES['product_image']['name']);
         $new_name = rand() . '.' . $extension[1];
@@ -55,22 +50,17 @@
 
 
     public function register_product($id_category,$product,$package,$unit,$currency,$buying_price,$sale_price,$stock,$status,$image,$id_user){
-
       $connect=parent::connection();
       parent::set_names();
-       
       // stock empty -> 0 
       $stock = "";
-
       if($stock==""){
         $stocker=0;
       } else {
         $stocker = $_POST["stock"];
       }
-
       // call function upload_image()
       require_once("Product.php");
-
       $image_product = new Product();
       $image = '';
       if($_FILES["product_image"]["name"] != '')

@@ -5,27 +5,31 @@
   require_once("../config/connection.php");
 
   class User extends Connect {
-    // Login
+
+    public function get_rows_users(){
+      $connect= parent::connection();
+      $sql="select * from users";
+      $sql=$connect->prepare($sql);
+      $sql->execute();
+      $result= $sql->fetchAll(PDO::FETCH_ASSOC);
+      return $sql->rowCount();
+    }
+
     public function login(){
       $connect = parent::connection();
       parent::set_names();
-
       if(isset($_POST["send"])) {
-
         // validations
         $password = $_POST["password"];
         $email = $_POST["email"];
         $status = 1;
-
         if(empty($email) and empty($password)) {
           header("Location:".Connect::route()."views/index.php?m=2");
           exit();
         } else if(!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/", $password)) {
-
           // login failed
           header("Location:".Connect::route()."views/index.php?m=1");
           exit();
-          
         } else {
           // login successful
           $sql="select * from users where email=? and password=? and status=?";
@@ -35,7 +39,6 @@
           $sql->bindValue(3, $status);  
           $sql->execute();
           $result=$sql->fetch();
-
           // If user exists and password matches, then create session
           if(is_array($result) and count($result)>0) {
             $_SESSION["id_user"] = $result["id_user"];

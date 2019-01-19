@@ -4,6 +4,15 @@
 
   class Client extends Connect{
 
+    public function get_rows_clients(){
+      $connect= parent::connection();
+      $sql="select * from clients";
+      $sql=$connect->prepare($sql);
+      $sql->execute();
+      $result= $sql->fetchAll(PDO::FETCH_ASSOC);
+      return $sql->rowCount();
+    }
+
     public function get_clients(){
       $connect=parent::connection();
       parent::set_names();

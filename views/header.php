@@ -3,6 +3,22 @@
 
   if (isset($_SESSION["id_user"])) {
 
+    require_once("../models/Category.php");
+    require_once("../models/Product.php");
+    require_once("../models/Supplier.php");
+    require_once("../models/User.php");
+    require_once("../models/Purchase.php");
+    require_once("../models/Client.php");
+    require_once("../models/Sale.php");
+
+    $category = new Category();
+    $product = new Product();
+    $supplier = new Supplier();
+    $user = new User();
+    $purchase = new Purchase();
+    $client = new Client();
+    $sale = new Sale();
+
 ?>
 
 <!DOCTYPE html>
@@ -150,7 +166,7 @@
           <a href="categories.php">
             <i class="fa fa-list" aria-hidden="true"></i> <span>Categories</span>
             <span class="pull-right-container badge bg-blue">
-              <i class="fa fa-bell pull-right">20</i>
+              <i class="fa fa-bell pull-right"><?php echo $category-> get_rows_categories() ?></i>
             </span>
           </a>
         </li>
@@ -159,7 +175,7 @@
           <a href="products.php">
             <i class="fa fa-tasks" aria-hidden="true"></i> <span>Products</span>
             <span class="pull-right-container badge bg-blue">
-              <i class="fa fa-bell pull-right">20</i>
+              <i class="fa fa-bell pull-right"><?php echo $product-> get_rows_products() ?></i>
             </span>
           </a>
         </li>
@@ -168,7 +184,7 @@
             <a href="suppliers.php">
               <i class="fa fa-users"></i> <span>Suppliers</span>
               <span class="pull-right-container badge bg-blue">
-                <i class="fa fa-bell pull-right">5</i>
+                <i class="fa fa-bell pull-right"><?php echo $supplier-> get_rows_suppliers() ?></i>
               </span>
             </a>
           </li>
@@ -177,7 +193,7 @@
           <a href="purchases.php">
             <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span>Purchases</span>
             <span class="pull-right-container badge bg-blue">
-              <i class="fa fa-bell pull-right">10</i>
+              <i class="fa fa-bell pull-right"><?php echo $purchase-> get_rows_purchases() ?></i>
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
@@ -193,7 +209,7 @@
           <a href="clients.php">
             <i class="fa fa-users"></i> <span>Clients</span>
             <span class="pull-right-container badge bg-blue">
-              <i class="fa fa-bell pull-right">3</i>
+              <i class="fa fa-bell pull-right"><?php echo $client-> get_rows_clients() ?></i>
             </span>
           </a>
         </li>
@@ -202,7 +218,7 @@
           <a href="sales.php">
             <i class="fa fa-suitcase" aria-hidden="true"></i> <span>Sales</span>
             <span class="pull-right-container badge bg-blue">
-              <i class="fa fa-bell pull-right">8</i>
+              <i class="fa fa-bell pull-right"><?php echo $sale-> get_rows_sales() ?></i>
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
@@ -247,7 +263,7 @@
           <a href="users.php">
             <i class="fa fa-user" aria-hidden="true"></i> <span>Users</span>
             <span class="pull-right-container badge bg-blue">
-              <i class="fa fa-bell pull-right">3</i>
+              <i class="fa fa-bell pull-right"><?php echo $user-> get_rows_users() ?></i>
             </span>
           </a>
         </li>
