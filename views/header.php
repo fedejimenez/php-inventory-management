@@ -262,7 +262,7 @@
         </li> -->
 
          <li class="">
-          <a href="">
+          <a href="" onclick="show_company(<?php echo $_SESSION["id_user"]?>)" data-toggle="modal" data-target="#companyModal">
             <i class="fa fa-building" aria-hidden="true"></i> <span>Company</span>
           </a>
         </li>
@@ -364,9 +364,17 @@
     </div>
   </div>
 
+  <!--  END USER MODAL -->
+
+  <!-- MODAL FOR COMPANY EDITING -->
+  <?php  
+    require_once("modal/company_modal.php")
+  ?>
+
   <script src="../public/bower_components/jquery/dist/jquery.min.js"></script>
 
   <script type="text/javascript" src="js/profile.js"></script>
+  <script type="text/javascript" src="js/company.js"></script>
 
 <?php  
   } else {
