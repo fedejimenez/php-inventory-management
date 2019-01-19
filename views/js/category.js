@@ -136,4 +136,22 @@ function changeStatusCategory(id_category, status){
   });//bootbox
 }
 
+function deleteCategory(id_category){
+  bootbox.confirm("¿Are you sure you want to delete this Category?", function(result){
+    if(result){
+      $.ajax({
+        url:"../ajax/category.php?op=delete",
+        method:"POST",
+        data:{id_category:id_category},
+
+        success:function(data){
+          console.log(data);
+          $("#results_ajax").html(data);
+          $("#category_data").DataTable().ajax.reload();
+        }
+      });
+    }
+  });//bootbox
+}
+
 init();

@@ -156,6 +156,47 @@
       );
     echo json_encode($results);
     break;
-  }
 
+  case "delete":
+    $data= $products->get_product_by_id_cat($_POST["id_category"]);
+      if(is_array($data)==true and count($data)>0){
+        $errors[]="This Category has Products associated!";
+      }
+        else{
+          $data= $categories->get_category_by_id($_POST["id_category"]);
+          if(is_array($data)==true and count($data)>0){
+            $categories->delete_category($_POST["id_category"]);
+            $messages[]="Category successfuly deleted!";
+           }
+      }
+    
+    if(isset($messages)){
+      ?>
+      <div class="alert alert-success" role="alert">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>¡Bien hecho!</strong>
+          <?php
+            foreach($messages as $message) {
+                echo $message;
+              }
+            ?>
+      </div>
+      <?php
+    }
+
+    if(isset($errors)){
+      ?>
+      <div class="alert alert-danger" role="alert">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>Error!</strong> 
+          <?php
+            foreach($errors as $error) {
+                echo $error;
+              }
+            ?>
+      </div>
+      <?php
+    }
+    break;
+  }
 ?>

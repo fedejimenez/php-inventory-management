@@ -115,6 +115,52 @@
       return $result=$sql->fetchAll(PDO::FETCH_ASSOC);
 
     }
+
+    public function delete_category($id_category){
+       $connect=parent::connection();
+       $sql="delete from category where id_category=?";
+       $sql=$connect->prepare($sql);
+       $sql->bindValue(1,$id_category);
+       $sql->execute();
+       return $result=$sql->fetch();
+    }
+
+    public function get_category_by_id_usuario($id_usuario){
+      $connect= parent::connection();
+       $sql="select * from category where id_usuario=?";
+          $sql=$connect->prepare($sql);
+          $sql->bindValue(1, $id_usuario);
+          $sql->execute();
+          return $result= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function get_category_by_id_purchases($id_category){
+      $connect=parent::connection();
+      parent::set_names();
+      $sql="select c.id_categoy, comp.id_category
+           from category c 
+            INNER JOIN purchases comp ON c.id_category = comp.id_category
+            where c.id_category=?
+            ";
+      $sql=$connect->prepare($sql);
+      $sql->bindValue(1,$id_category);
+      $sql->execute();
+      return $result=$sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function get_category_by_id_detail_purchases($id_category){
+      $connect=parent::connection();
+      parent::set_names();
+      $sql="select c.id_category, d.id_category
+            from category c 
+            INNER JOIN purchases_details d ON c.id_category = d.id_category
+            where c.id_category=?
+            ";
+           $sql=$connect->prepare($sql);
+           $sql->bindValue(1,$id_category);
+           $sql->execute();
+           return $result=$sql->fetchAll(PDO::FETCH_ASSOC);
+     }
   }
 
 ?>

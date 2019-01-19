@@ -280,6 +280,59 @@
        }
     }
 
-  }
+    public function get_product_by_id_cat($id_category){
+      $connect= parent::connection();
+      $sql="select * from product where id_category=?";
+      $sql=$connect->prepare($sql);
+      $sql->bindValue(1, $id_category);
+      $sql->execute();
+      return $result= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
 
+    public function get_product_por_id_detail_purchase($id_product){
+      $connect=parent::connection();
+      parent::set_names();
+      $sql="select p.id_product, p.product, c.id_product, c.product as product_purchases
+            from product p 
+            INNER JOIN detalle_compras c ON p.id_product = c.id_product
+              where p.id_product=?
+            ";
+       $sql=$connect->prepare($sql);
+       $sql->bindValue(1,$id_product);
+       $sql->execute();
+       return $result=$sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function get_product_by_id_detail_sale($id_product){
+      $connect=parent::connection();
+      parent::set_names();
+      $sql="select p.id_product, p.product, v.id_product, v.product as product_sales
+            from product p 
+            INNER JOIN detail_sales v ON p.id_product = v.id_product
+            where p.id_product=?
+            ";
+      $sql=$connect->prepare($sql);
+      $sql->bindValue(1,$id_product);
+      $sql->execute();
+      return $result=$sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function delete_product($id_product){
+      $connect=parent::connection();
+      $sql="delete from product where id_product=?";
+      $sql=$connect->prepare($sql);
+      $sql->bindValue(1, $id_product);
+      $sql->execute();
+      return $result=$sql->fetch(PDO::FETCH_ASSOC);
+    }
+      
+    public function get_product_por_id_user($id_user){
+      $connect= parent::connection();
+      $sql="select * from product where id_user=?";
+      $sql=$connect->prepare($sql);
+      $sql->bindValue(1, $id_user);
+      $sql->execute();
+      return $result= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+  }
 ?>
