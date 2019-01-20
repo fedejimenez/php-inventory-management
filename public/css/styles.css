@@ -13,8 +13,13 @@
        display:none;
 }
 
-table.dataTable tbody td {
+table.dataTable tbody td{
   vertical-align: middle;
+}
+
+.sorting_1:before{
+  /*vertical-align: middle;*/
+  top:30% !important;
 }
 
 /* home cards */

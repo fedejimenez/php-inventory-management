@@ -214,6 +214,9 @@
 <script src="../public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 <!-- DataTables -->
+
+<!--To make datatables responsive, set property responsive="true"-->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/r-2.2.0/sl-1.2.3/datatables.min.js"></script>
 <!-- <script src="../public/bower_components/datatables.net/js/jquery.dataTables.min.js"></script> -->
 <script src="../public/datatables/jquery.dataTables.min.js"></script>
 <script src="../public/datatables/dataTables.buttons.min.js"></script>
