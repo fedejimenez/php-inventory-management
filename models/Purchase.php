@@ -637,7 +637,7 @@
       $end_date = $_POST["datepicker2"];
       $date = str_replace('/', '-', $end_date);
       $end_date = date("Y-m-d", strtotime($date));
-      $sql="select sum(qtyidad_purchase) as total from purchases_details where idnumber_supplier=? and purchase_date >=? and purchase_date <=? and status = '1';";
+      $sql="select sum(purchase_quantity) as total from purchases_details where idnumber_supplier=? and purchase_date >=? and purchase_date <=? and status = '1';";
       $sql=$connect->prepare($sql);
       $sql->bindValue(1,$idnumber);
       $sql->bindValue(2,$start_date);
