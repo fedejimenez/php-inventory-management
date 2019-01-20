@@ -142,7 +142,7 @@
                     <tr class="bg-success">
                       <th class="all">Item</th>
                       <th class="all">Product</th>
-                      <th class="all">Saling Price</th>
+                      <th class="all">Selling Price</th>
                       <th class="min-desktop">Stock</th>
                       <th class="min-desktop">Quantity</th>
                       <th class="min-desktop">Discount %</th>

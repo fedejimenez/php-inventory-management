@@ -540,7 +540,11 @@
       foreach($result as $row){
         $year= $output["year"]=$row["year"];
         $p = $output["total_purchase_year"]=$row["total_purchase_year"];
-        echo $graph= "{name:'".$year."', y:".$p."},";
+        if($p != null){
+          echo $graph= "{name:'".$year."', y:".$p."},";
+        }else{
+          echo $graph= "{name:'nadaaaa', y:2},";
+        }
       }
     }
 

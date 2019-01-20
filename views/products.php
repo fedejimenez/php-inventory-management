@@ -44,7 +44,7 @@
                           <th width="10%">Package</th>
                           <th width="5%">Meas. Unit</th>
                           <th width="10%">Buying Price</th>
-                          <th width="10%">Saling Price</th>
+                          <th width="10%">Selling Price</th>
                           <th width="5%">Stock</th>
                           <th width="10%">Status</th>
                           <th width="10%">Edit</th>
@@ -145,9 +145,9 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="" class="col-lg-1 control-label">Saling Price</label>
+                    <label for="" class="col-lg-1 control-label">Selling Price</label>
                     <div class="col-lg-9 col-lg-offset-1">
-                      <input type="text" class="form-control" id="sale_price" name="sale_price" placeholder="Saling Price" required pattern="[0-9]{0,15}">
+                      <input type="text" class="form-control" id="sale_price" name="sale_price" placeholder="Selling Price" required pattern="[0-9]{0,15}">
                     </div>
                   </div>
 

@@ -20,7 +20,7 @@
                     <th class="min-desktop">Package</th>
                     <th class="min-desktop">Meas. Unit</th>
                     <th class="min-desktop">Buying Price</th>
-                    <th class="min-desktop">Saling Price</th>
+                    <th class="min-desktop">Selling Price</th>
                     <th class="min-desktop">Stock</th>
                     <th class="min-desktop">Status</th>
                     <th class="min-desktop">Image</th>

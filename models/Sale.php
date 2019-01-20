@@ -65,7 +65,7 @@
             <thead style='background-color:#A9D0F5'>
               <th>Quantity</th>
               <th>Product</th>
-              <th>Saling Price</th>
+              <th>Selling Price</th>
               <th>Discount (%)</th>
               <th>Ammount</th>
             </thead>
