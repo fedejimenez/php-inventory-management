@@ -96,7 +96,7 @@
 
 <?php
   } else {
-      header("Location:".Connect::routes()."  /index.php");
+      header("Location:".Connect::routes()."index.php");
   }
 
 ?>

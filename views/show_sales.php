@@ -68,7 +68,7 @@
 
 <?php
   } else {
-        header("Location:".Connect::routes()."views/index.php");
+        header("Location:".Connect::routes()."index.php");
   }
 
 ?>

@@ -227,7 +227,7 @@
 
 <?php
   } else {
-    header("Location:".Connect::ruta()."views/index.php");
+    header("Location:".Connect::route()."index.php");
   }
 
 ?>

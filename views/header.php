@@ -78,9 +78,9 @@
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="index.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
+      <span class="logo-mini"><b></b></span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b>Purchases - Sales</b></span>
     </a>
@@ -394,7 +394,7 @@
 
 <?php  
   } else {
-    header("Location:".Connect::route()."views/index.php");
+    header("Location:".Connect::route()."index.php");
     exit();
   }
   

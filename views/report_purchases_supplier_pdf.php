@@ -224,6 +224,6 @@
     $dompdf->stream("Products List.pdf", array('Attachment'=>'0'));
   } else{
 
-     header("Location:".Connect::route()."views/index.php");
+     header("Location:".Connect::route()."index.php");
   }
 ?>

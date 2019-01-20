@@ -82,7 +82,7 @@
 <?php
    
   } else {
-      header("Location:".Connetc::route()."views/index.php");
+      header("Location:".Connetc::route()."index.php");
   }
 
 ?>

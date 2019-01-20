@@ -2,9 +2,9 @@
 
   require_once("../config/connection.php");
 
-  session_destroy();
+  header("Location:".Connect::route()."index.php");
 
-  header("Location".Connect::route()."views/ndex.php");
+  session_destroy();
   exit();
 
 ?>

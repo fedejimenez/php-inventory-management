@@ -1,8 +1,7 @@
 <?php 
   
   // connection to DB 
-  
-  require_once("../config/connection.php");
+  // require_once("../config/connection.php");
 
   class User extends Connect {
 
@@ -24,11 +23,11 @@
         $email = $_POST["email"];
         $status = 1;
         if(empty($email) and empty($password)) {
-          header("Location:".Connect::route()."views/index.php?m=2");
+          header("Location:".Connect::route()."index.php?m=2");
           exit();
         } else if(!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/", $password)) {
           // login failed
-          header("Location:".Connect::route()."views/index.php?m=1");
+          header("Location:".Connect::route()."index.php?m=1");
           exit();
         } else {
           // login successful
@@ -52,7 +51,7 @@
             header("Location:".Connect::route()."views/home.php");
             exit();
           } else { // login failed, retry
-            header("Location:".Connect::route()."views/index.php?m=1");
+            header("Location:".Connect::route()."index.php?m=1");
             exit();
           }
         } // close else

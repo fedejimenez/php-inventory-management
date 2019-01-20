@@ -1,5 +1,3 @@
-
-
 <?php
 
   require_once("../config/connection.php");
@@ -220,7 +218,7 @@
 <?php
    
   } else {
-      header("Location:".Connect::route()."views/index.php");
+      header("Location:".Connect::route()."index.php");
   }
 
 ?>

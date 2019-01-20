@@ -105,7 +105,7 @@
 
   } else {
     //   if not logged in
-    header("Location:".Connect::route()."views/index.php");
+    header("Location:".Connect::route()."index.php");
   }
 
 ?> 

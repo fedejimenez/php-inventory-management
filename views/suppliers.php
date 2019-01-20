@@ -145,7 +145,7 @@
    
   } else {
 
-        header("Location:".Conenect::route()."views/index.php");
+        header("Location:".Conenect::route()."index.php");
 
   }
 

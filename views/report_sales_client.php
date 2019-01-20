@@ -48,5 +48,7 @@
 <?php require_once("footer.php");?>
 
 <?php
+   } else {
+      header("Location:".Connect::routes()."index.php");
    }
 ?>
