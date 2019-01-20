@@ -497,6 +497,155 @@
       $sql->execute();
       return $result= $sql->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    /*REPORTS - PURCHASES*/
+    public function get_purchases_report_general(){
+      $connect=parent::connection();
+      parent::set_names();
+
+      $sql="SELECT MONTHname(purchase_date) as month, MONTH(purchase_date) as number_month, YEAR(purchase_date) as year, SUM(total) as total_purchase, currency
+        FROM purchases where status='1' GROUP BY YEAR(purchase_date) desc, month(purchase_date) desc";
+      $sql=$connect->prepare($sql);
+      $sql->execute();
+      return $result=$sql->fetchAll(PDO::FETCH_ASSOC);
+     }
+     
+    public function sum_purchases_total_year(){
+      $connect=parent::connection();
+      $sql="SELECT YEAR(purchase_date) as year,SUM(total) as total_purchase_year, currency FROM purchases where status='1' GROUP BY YEAR(purchase_date) desc";
+      $sql=$connect->prepare($sql);
+      $sql->execute();
+      return $result= $sql->fetchAll();
+     }
+     
+    public function sum_purchases_total_graph(){
+      $connect=parent::connection();
+      $sql="SELECT YEAR(purchase_date) as year,SUM(total) as total_purchase_year FROM purchases where status='1' GROUP BY YEAR(purchase_date) desc";
+      $sql=$connect->prepare($sql);
+      $sql->execute();
+      $result= $sql->fetchAll();
+      foreach($result as $row){
+        $year= $output["year"]=$row["year"];
+        $p = $output["total_purchase_year"]=$row["total_purchase_year"];
+        echo $graph= "{name:'".$year."', y:".$p."},";
+      }
+    }
+
+    public function sum_purchases_canceled_total_graph(){
+      $connect=parent::connection();
+      $sql="SELECT YEAR(purchase_dat  e) as year,SUM(total) as total_purchase_year FROM purchases where status='0' GROUP BY YEAR(purchase_date) desc";
+      $sql=$connect->prepare($sql);
+      $sql->execute();
+      $result= $sql->fetchAll();
+      foreach($result as $row){
+        $year= $output["year"]=$row["year"];
+        $p = $output["total_purchase_year"]=$row["total_purchase_year"];
+        echo $graph= "{name:'".$year."', y:".$p."},";
+      }
+    }
+
+    public function sum_purchases_year_month_graph($date){
+      $connect=parent::connection();
+      parent::set_names();
+      $months = array("January","February","March","April","May","June","July","August","September","October","November","December");
+      if(isset($_POST["year"])){
+        $date=$_POST["year"];
+        $sql="SELECT YEAR(purchase_date) as year, MONTHname(purchase_date) as month, SUM(total) as total_purchase_month FROM purchases WHERE YEAR(purchase_date)=? and status='1' GROUP BY MONTHname(purchase_date) desc";
+        $sql=$connect->prepare($sql);
+        $sql->bindValue(1,$date);
+        $sql->execute();
+        $result= $sql->fetchAll();
+        foreach($result as $row){
+          $year= $output["month"]=$months[date("n", strtotime($row["month"]))-1];
+               $p = $output["total_purchase_month"]=$row["total_purchase_month"];
+          echo $graph= "{name:'".$year."', y:".$p."},";
+        }
+      } else {
+      $start_date=date("Y");
+
+      $sql="SELECT YEAR(purchase_date) as year, MONTHname(purchase_date) as month, SUM(total) as total_purchase_month FROM purchases WHERE YEAR(purchase_date)=? and status='1' GROUP BY MONTHname(purchase_date) desc";
+         
+      $sql=$connect->prepare($sql);
+      $sql->bindValue(1,$start_date);
+      $sql->execute();
+      $result= $sql->fetchAll();
+           
+      foreach($result as $row){
+        $year= $output["month"]=$months[date("n", strtotime($row["month"]))-1];
+        $p = $output["total_purchase_month"]=$row["total_purchase_month"];
+       echo $graph= "{name:'".$year."', y:".$p."},";
+         }//end foreach
+      }//end else
+    }
+
+    public function get_year_purchases(){
+      $connect=parent::connection();
+      $sql="select year(purchase_date) as date from purchases group by year(purchase_date) asc";
+      $sql=$connect->prepare($sql);
+      $sql->execute();
+      return $result= $sql->fetchAll();
+    }
+
+    public function get_purchases_monthly($date){
+      $connect=parent::connection();
+      if(isset($_POST["year"])){
+        $date=$_POST["year"];
+        $sql="select MONTHname(purchase_date) as month, MONTH(purchase_date) as number_month, YEAR(purchase_date) as year, SUM(total) as total_purchase, currency
+        from purchases where YEAR(purchase_date)=? and status='1' group by MONTHname(purchase_date) asc";
+        $sql=$connect->prepare($sql);
+        $sql->bindValue(1,$date);
+        $sql->execute();
+        return $result= $sql->fetchAll();
+      } else {
+        $start_date=date("Y");
+        $sql="select MONTHname(purchase_date) as month, MONTH(purchase_date) as number_month, YEAR(purchase_date) as year, SUM(total) as total_purchase, currency
+            from purchases where YEAR(purchase_date)=? and status='1' group by MONTHname(purchase_date) asc";
+        $sql=$connect->prepare($sql);
+        $sql->bindValue(1,$start_date);
+        $sql->execute();
+        return $result= $sql->fetchAll();
+      }//end else
+    }
+
+    public function get_order_by_date($idnumber,$start_date,$end_date){
+
+      $connect=parent::connection();
+      parent::set_names();
+      $start_date = $_POST["datepicker"];
+      $date = str_replace('/', '-', $start_date);
+      $start_date = date("Y-m-d", strtotime($date));
+      $end_date = $_POST["datepicker2"];
+      $date = str_replace('/', '-', $end_date);
+      $end_date = date("Y-m-d", strtotime($date));
+      $sql="select * from purchases_details where idnumber_supplier=? and purchase_date>=? and purchase_date<=? and status='1';";
+
+      $sql=$connect->prepare($sql);
+      $sql->bindValue(1,$idnumber);
+      $sql->bindValue(2,$start_date);
+      $sql->bindValue(3,$end_date);
+      $sql->execute();
+      return $result=$sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function get_qty_products_by_date($idnumber,$start_date,$end_date){
+
+      $connect=parent::connection();
+      parent::set_names();
+      $start_date = $_POST["datepicker"];
+      $date = str_replace('/', '-', $start_date);
+      $start_date = date("Y-m-d", strtotime($date));
+      $end_date = $_POST["datepicker2"];
+      $date = str_replace('/', '-', $end_date);
+      $end_date = date("Y-m-d", strtotime($date));
+      $sql="select sum(qtyidad_purchase) as total from purchases_details where idnumber_supplier=? and purchase_date >=? and purchase_date <=? and status = '1';";
+      $sql=$connect->prepare($sql);
+      $sql->bindValue(1,$idnumber);
+      $sql->bindValue(2,$start_date);
+      $sql->bindValue(3,$end_date);
+      $sql->execute();
+
+      return $result=$sql->fetch(PDO::FETCH_ASSOC);
+    } 
   }
 
 ?>
