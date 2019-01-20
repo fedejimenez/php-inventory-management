@@ -254,7 +254,7 @@
           <ul class="treeview-menu">
             <li><a href="report_general_sales.php"><i class="fa fa-circle-o"></i>Resume</a></li>
             <li><a href="report_monthly_sales.php"><i class="fa fa-circle-o"></i>By Month</a></li>
-            <li><a href="report_supplier_sales.php"><i class="fa fa-circle-o"></i>By Client</a></li>
+            <li><a href="report_sales_client.php"><i class="fa fa-circle-o"></i>By Client</a></li>
           </ul> 
         </li>
 

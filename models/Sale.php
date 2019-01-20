@@ -582,7 +582,7 @@
       }
     }
 
-    public function get_sale_per_date($idnumber,$start_date,$end_date){
+    public function get_sale_by_date($idnumber,$start_date,$end_date){
       $connect=parent::connection();
       parent::set_names();
       $start_date = $_POST["datepicker"];
@@ -591,7 +591,7 @@
       $end_date = $_POST["datepicker2"];
       $date = str_replace('/', '-', $end_date);
       $end_date = date("Y-m-d", strtotime($date));
-      $sql="select * from sales_details where idnumber_cliente=? and sale_date>=? and sale_date<=? and status='1';";
+      $sql="select * from sales_details where idnumber_client=? and sale_date>=? and sale_date<=? and status='1';";
       $sql=$connect->prepare($sql);
       $sql->bindValue(1,$idnumber);
       $sql->bindValue(2,$start_date);
@@ -624,7 +624,7 @@
       }
     }
 
-    public function get_quantity_products_per_date($idnumber,$start_date,$end_date){
+    public function get_quantity_products_by_date($idnumber,$start_date,$end_date){
       $connect=parent::connection();
       parent::set_names();
       $start_date = $_POST["datepicker"];
@@ -638,7 +638,7 @@
       $sql->bindValue(1,$idnumber);
       $sql->bindValue(2,$start_date);
       $sql->bindValue(3,$end_date);
-      $sql->execut();
+      $sql->execute();
       return $result=$sql->fetch(PDO::FETCH_ASSOC);
     } 
   }
