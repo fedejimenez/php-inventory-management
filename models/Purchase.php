@@ -650,6 +650,36 @@
 
       return $result=$sql->fetch(PDO::FETCH_ASSOC);
     } 
+
+    public function get_purchases_year_current(){
+      $connect=parent::connection();
+      parent::set_names();
+
+      $sql="SELECT YEAR(purchase_date) as year, MONTHname(purchase_date) as month, SUM(total) as total_purchase_month, currency FROM purchases WHERE YEAR(purchase_date)=YEAR(CURDATE()) and status='1' GROUP BY MONTHname(purchase_date) desc";
+
+      $sql=$connect->prepare($sql);
+      $sql->execute();
+      return $resultado=$sql->fetchAll();
+    }
+
+    public function get_purchases_year_current_graph(){
+      $connect=parent::connection();
+      parent::set_names();
+
+      $months = array("January","February","March","April","May","June","July","August","September","October","November","December");
+      
+      $sql="SELECT  MONTHname(purchase_date) as month, SUM(total) as total_purchase_month FROM purchases WHERE YEAR(purchase_date)=YEAR(CURDATE()) and status='1' GROUP BY MONTHname(purchase_date) desc";
+               
+      $sql=$connect->prepare($sql);
+      $sql->execute();
+
+      $result= $sql->fetchAll();
+      foreach($result as $row){
+        $month= $output["month"]=$months[date("n", strtotime($row["month"]))-1];
+        $p = $output["total_purchase_month"]=$row["total_purchase_month"];
+        echo $graph= "{name:'".$month."', y:".$p."},";
+      }
+    }
   }
 
 ?>

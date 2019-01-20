@@ -3,16 +3,34 @@
 .sizeModal{
   width: 70%;
 }
-
     
 .red{
     border-color:#a94442;
 }
 
+/* hide button submit if quantity > stock*/
 .hide_button{
        display:none;
 }
 
 table.dataTable tbody td {
   vertical-align: middle;
+}
+
+/* home cards */
+.panel-modules a, 
+.panel-modules a:hover, 
+.panel-modules a:focus, 
+.panel-modules a:active{
+  color:white;
+}
+
+/* progress bar*/
+.progress-xs {
+  height: 22px;
+}
+
+.progress-bar{
+  font-size:100%;
+  font-weight: bold;
 }

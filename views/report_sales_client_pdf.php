@@ -61,7 +61,7 @@ require_once("../config/connection.php");
     </tr>
   </table>
 
-  <div align="center" style="color:black; font-weight:bolder; font-size:20px;">DETAILS  </div>
+  <div align="center" style="color:black; font-weight:bolder; font-size:20px;">DETAILS </div>
     <table width="101%" class="change_order_items">
       <tr>
         <th colspan="5" style="font-size:15pt">CLIENT DATA: </th>
