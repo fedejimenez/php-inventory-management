@@ -474,4 +474,171 @@
       $sql->execute();
       return $result= $sql->fetchAll(PDO::FETCH_ASSOC);
     }
+  
+    // ======== SALES REPORTS =========================================
+    public function get_sales_report_general(){
+      $connect=parent::connection();
+      parent::set_names();
+      $sql="SELECT MONTHname(sale_date) as month, MONTH(sale_date) as number_month, YEAR(sale_date) as year, SUM(total) as total_sale, currency
+            FROM sales where status='1' GROUP BY YEAR(sale_date) desc, month(sale_date) desc";
+      $sql=$connect->prepare($sql);
+      $sql->execute();
+      return $result=$sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function sum_sales_total_year(){
+      $connect=parent::connection();
+      $sql="SELECT YEAR(sale_date) as year,SUM(total) as total_sale_year FROM sales where status='1' GROUP BY YEAR(sale_date) desc";
+      $sql=$connect->prepare($sql);
+      $sql->execute();
+      return $result= $sql->fetchAll();
+    }
+    
+    public function sum_sales_total_graph(){
+      $connect=parent::connection();
+      $sql="SELECT YEAR(sale_date) as year,SUM(total) as total_sale_year FROM sales where status='1' GROUP BY YEAR(sale_date) desc";
+      $sql=$connect->prepare($sql);
+      $sql->execute();
+      $result= $sql->fetchAll();
+      foreach($result as $row){
+        $year= $output["year"]=$row["year"];
+        $p = $output["total_sale_year"]=$row["total_sale_year"];
+        echo $graph= "{name:'".$year."', y:".$p."},";
+      }
+    }
+    
+    public function sum_sales_canceled_total_graph(){
+      $connect=parent::connection();
+      $sql="SELECT YEAR(sale_date) as year,SUM(total) as total_sale_year FROM sales where status='0' GROUP BY YEAR(sale_date) desc";
+      $sql=$connect->prepare($sql);
+      $sql->execute();
+      $result= $sql->fetchAll();
+      foreach($result as $row){
+        $year= $output["year"]=$row["year"];
+        $p = $output["total_sale_year"]=$row["total_sale_year"];
+        echo $graph= "{name:'".$year."', y:".$p."},";
+      }
+    }
+
+    public function sum_sales_year_month_graph($date){
+      $connect=parent::connection();
+      parent::set_names();
+      $months = array("January","February","March","April","May","June","July","August","September","October","November","December");
+      if(isset($_POST["year"])){
+        $date=$_POST["year"];
+        $sql="SELECT YEAR(sale_date) as year, MONTHname(sale_date) as month, SUM(total) as total_sale_month FROM sales WHERE YEAR(sale_date)=? and status ='1' GROUP BY MONTHname(sale_date) desc";
+             
+        $sql=$connect->prepare($sql);
+        $sql->bindValue(1,$date);
+        $sql->execute();
+        $result= $sql->fetchAll();
+        foreach($result as $row){
+          $year= $output["month"]=$months[date("n", strtotime($row["month"]))-1];
+          $p = $output["total_sale_month"]=$row["total_sale_month"];
+          echo $graph= "{name:'".$year."', y:".$p."},";
+        }
+      } else {
+        $start_date=date("Y");
+        $sql="SELECT YEAR(sale_date) as year, MONTHname(sale_date) as month, SUM(total) as total_sale_month FROM sales WHERE YEAR(sale_date)=? and status ='1' GROUP BY MONTHname(sale_date) desc";
+        $sql=$connect->prepare($sql);
+        $sql->bindValue(1,$start_date);
+        $sql->execute();
+        $result= $sql->fetchAll();
+        foreach($result as $row){
+          $year= $output["month"]=$months[date("n", strtotime($row["month"]))-1];
+          $p = $output["total_sale_month"]=$row["total_sale_month"];
+          echo $graph= "{name:'".$year."', y:".$p."},";
+        }
+      }
+    }
+
+    public function get_year_sales(){
+      $connect=parent::connection();
+      $sql="select year(sale_date) as date from sales group by year(sale_date) asc";
+      $sql=$connect->prepare($sql);
+      $sql->execute();
+      return $result= $sql->fetchAll();
+    }
+
+    public function get_sales_monthly($date){
+      $connect=parent::connection();
+      if(isset($_POST["year"])){
+        $date=$_POST["year"];
+        $sql="select MONTHname(sale_date) as month, MONTH(sale_date) as number_month, YEAR(sale_date) as year, SUM(total) as total_sale, currency
+        from sales where YEAR(sale_date)=? and status='1' group by MONTHname(sale_date) desc";
+
+        $sql=$connect->prepare($sql);
+        $sql->bindValue(1,$date);
+        $sql->execute();
+        return $result= $sql->fetchAll();
+      } else {
+        $start_date=date("Y");
+        $sql="select MONTHname(sale_date) as month, MONTH(sale_date) as number_month, YEAR(sale_date) as year, SUM(total) as total_sale, currency
+        from sales where YEAR(sale_date)=? and status='1' group by MONTHname(sale_date) desc";
+        $sql=$connect->prepare($sql);
+        $sql->bindValue(1,$start_date);
+        $sql->execute();
+        return $result= $sql->fetchAll();
+      }
+    }
+
+    public function get_sale_per_date($idnumber,$start_date,$end_date){
+      $connect=parent::connection();
+      parent::set_names();
+      $start_date = $_POST["datepicker"];
+      $date = str_replace('/', '-', $start_date);
+      $start_date = date("Y-m-d", strtotime($date));
+      $end_date = $_POST["datepicker2"];
+      $date = str_replace('/', '-', $end_date);
+      $end_date = date("Y-m-d", strtotime($date));
+      $sql="select * from sales_details where idnumber_cliente=? and sale_date>=? and sale_date<=? and status='1';";
+      $sql=$connect->prepare($sql);
+      $sql->bindValue(1,$idnumber);
+      $sql->bindValue(2,$start_date);
+      $sql->bindValue(3,$end_date);
+      $sql->execute();
+      return $result=$sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function get_sales_year_current(){
+      $connect=parent::connection();
+      parent::set_names();
+      $sql="SELECT YEAR(sale_date) as year, MONTHname(sale_date) as month, SUM(total) as total_sale_month, currency FROM sales WHERE YEAR(sale_date)=YEAR(CURDATE()) and status='1' GROUP BY MONTHname(sale_date) desc";
+      $sql=$connect->prepare($sql);
+      $sql->execute();
+      return $result=$sql->fetchAll();
+    }
+
+    public function get_sales_year_current_graph(){
+      $connect=parent::connection();
+      parent::set_names();
+      $months = array("January","February","March","April","May","June","July","August","September","October","November","December");
+      $sql="SELECT  MONTHname(sale_date) as month, SUM(total) as total_sale_month FROM sales WHERE YEAR(sale_date)=YEAR(CURDATE()) and status='1' GROUP BY MONTHname(sale_date) desc";
+      $sql=$connect->prepare($sql);
+      $sql->execute();
+      $result= $sql->fetchAll();
+      foreach($result as $row){
+        $month= $output["month"]=$months[date("n", strtotime($row["month"]))-1];
+        $p = $output["total_sale_month"]=$row["total_sale_month"];
+        echo $graph= "{name:'".$month."', y:".$p."},";
+      }
+    }
+
+    public function get_quantity_products_per_date($idnumber,$start_date,$end_date){
+      $connect=parent::connection();
+      parent::set_names();
+      $start_date = $_POST["datepicker"];
+      $date = str_replace('/', '-', $start_date);
+      $start_date = date("Y-m-d", strtotime($date));
+      $end_date = $_POST["datepicker2"];
+      $date = str_replace('/', '-', $end_date);
+      $end_date = date("Y-m-d", strtotime($date));
+      $sql="select sum(quantityidad_sale) as total from detalle_sales where idnumber_cliente=? and sale_date >=? and sale_date <=? and status='1';";
+      $sql=$connect->prepare($sql);
+      $sql->bindValue(1,$idnumber);
+      $sql->bindValue(2,$start_date);
+      $sql->bindValue(3,$end_date);
+      $sql->execut();
+      return $result=$sql->fetch(PDO::FETCH_ASSOC);
+    } 
   }
