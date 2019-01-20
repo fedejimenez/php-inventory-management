@@ -119,7 +119,7 @@
     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
       <div class="box">
         <div class="">
-          <h2 class="report_purchases_general container-fluid bg-red text-white col-lg-12 text-center mh-50">REPORT - GENERAL PURCHASES
+          <h2 class="report_purchases_general container-fluid bg-red text-white col-lg-12 text-center mh-50">REPORT - GENERAL PURCHASES BY YEAR
           </h2>
           <div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
           </div><!--end box-body-->
@@ -129,7 +129,7 @@
       <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
         <div class="box">
           <div class="">
-            <h2 class="report_purchases_general container-fluid bg-primary text-white col-lg-12 text-center mh-50">REPORT - CANCELED PURCHASES
+            <h2 class="report_purchases_general container-fluid bg-primary text-white col-lg-12 text-center mh-50">REPORT - CANCELED PURCHASES BY YEAR
             </h2>
             <div id="container_canceled" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
             </div>
@@ -188,7 +188,7 @@
             itemStyle: { "fontSize": "17px", "fontWeight": "normal" }
         },
         series: [{
-          name: 'Brands',
+          name: 'Total',
           colorByPoint: true,
           data: [
           <?php echo $data_graph= $purchases->sum_purchases_total_graph();?>
@@ -251,7 +251,7 @@
       },
       series: [
                 {
-        name: 'Brands',
+        name: 'Canceled',
         colorByPoint: true,
         data: [
           <?php echo $data_graph= $purchases->sum_purchases_canceled_total_graph();?>

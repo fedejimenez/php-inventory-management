@@ -533,7 +533,7 @@
 
     public function sum_purchases_canceled_total_graph(){
       $connect=parent::connection();
-      $sql="SELECT YEAR(purchase_dat  e) as year,SUM(total) as total_purchase_year FROM purchases where status='0' GROUP BY YEAR(purchase_date) desc";
+      $sql="SELECT YEAR(purchase_date) as year,SUM(total) as total_purchase_year FROM purchases where status='0' GROUP BY YEAR(purchase_date) desc";
       $sql=$connect->prepare($sql);
       $sql->execute();
       $result= $sql->fetchAll();

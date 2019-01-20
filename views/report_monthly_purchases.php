@@ -178,10 +178,10 @@
         data: [
           <?php 
       if(isset($_POST["year"])){
-          echo $data_grafica= $purchases->suma_purchases_anio_month_grafica($_POST["year"]);
+          echo $data_graph= $purchases->sum_purchases_year_month_graph($_POST["year"]);
            } else {
            $start_date=date("Y");
-            echo $data_grafica= $purchases->suma_purchases_anio_month_grafica($start_date);
+            echo $data_graph= $purchases->sum_purchases_year_month_graph($start_date);
            }
           ?>
           ]

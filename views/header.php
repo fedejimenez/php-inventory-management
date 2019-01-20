@@ -238,9 +238,9 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="report_general_purchases.php"><i class="fa fa-circle-o"></i>Report - General Purchases</a></li>
-            <li><a href="report_monthly_purchases.php"><i class="fa fa-circle-o"></i>Report - Monthy Purchases</a></li>
-            <li><a href="report_supplier_purchases.php"><i class="fa fa-circle-o"></i>Report - Purchaces by Supplier</a></li>
+            <li><a href="report_general_purchases.php"><i class="fa fa-circle-o"></i>Resume</a></li>
+            <li><a href="report_monthly_purchases.php"><i class="fa fa-circle-o"></i>By Month</a></li>
+            <li><a href="report_supplier_purchases.php"><i class="fa fa-circle-o"></i>By Supplier</a></li>
           </ul> 
         </li>
 
@@ -252,9 +252,9 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="report_general_sales.php"><i class="fa fa-circle-o"></i>Report - General Sales</a></li>
-            <li><a href="report_monthly_sales.php"><i class="fa fa-circle-o"></i>Report - Monthy Sales</a></li>
-            <li><a href="report_supplier_sales.php"><i class="fa fa-circle-o"></i>Report - Sales by Client</a></li>
+            <li><a href="report_general_sales.php"><i class="fa fa-circle-o"></i>Resume</a></li>
+            <li><a href="report_monthly_sales.php"><i class="fa fa-circle-o"></i>By Month</a></li>
+            <li><a href="report_supplier_sales.php"><i class="fa fa-circle-o"></i>By Client</a></li>
           </ul> 
         </li>
 
