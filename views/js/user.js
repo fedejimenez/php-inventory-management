@@ -12,6 +12,12 @@ function init(){
   $("#add_button").click(function(){
     $(".modal-title").text("Add User");
   });
+
+  //  Show permissions in user modal 
+  $.post("../ajax/user.php?op=permissions&id_user=",function(r){
+          $("#permissions").html(r);
+  });
+
 }
 
 //clear from fields
@@ -111,6 +117,10 @@ function showUser(id_user){
     $(".modal-title").text("Edit user");
     $("#id_user").val(id_user);
     $("#action").val("Edit");
+  });
+  // show checkboxes for permissions in users modal
+  $.post("../ajax/user.php?op=permissions&id_user="+id_user,function(r){
+    $("#permissions").html(r);
   });
 }
 

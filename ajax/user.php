@@ -36,7 +36,7 @@
       if($password == $password2) {
         if(empty($_POST["id_user"])){
           if(is_array($data)==true and count($data)==0){
-            $users->create_user($name, $lastname, $idnumber, $phone, $email, $address, $role, $user, $password, $password2, $status);
+            $users->create_user($name, $lastname, $idnumber, $phone, $email, $address, $role, $user, $password, $password2, $status, $permissions);
 
             $messages[] = "User succsessfully created!";
           }else{
@@ -44,7 +44,7 @@
           }
         } else {
           if(is_array($data)==true and count($data)==1){
-            $users->edit_user($id_user, $name, $lastname, $idnumber, $phone, $email, $address, $role, $user, $password, $password2, $status);
+            $users->edit_user($id_user, $name, $lastname, $idnumber, $phone, $email, $address, $role, $user, $password, $password2, $status, $permissions);
             $messages[] = "User succsessfully updated!";
           } else{
             $errors[] = "User id or email already exists.";
@@ -220,6 +220,8 @@
       $sup= $supplier->get_supplier_by_id_user($_POST["id_user"]); 
       $sales= $sale->get_sales_by_id_user($_POST["id_user"]);
       $detail_sale= $sale->get_detail_sales_by_id_user($_POST["id_user"]); 
+      $user_permission= $users->get_user_permissions_by_id_user($_POST["id_user"]);
+
       if(
         is_array($product)==true and count($product)>0 or 
         is_array($cat)==true and count($cat)>0 or 
@@ -269,7 +271,22 @@
         <?php
       }
     break;
+  case 'permissions':
+    $list_permissions= $users->permissions();
+    $id_user=$_GET['id_user'];
+    //echo $id_user;
+    $marks = $users->list_permissions_by_user($id_user);
+    //print_r($marks);
+    $values=array();
+    foreach($marks as $re){
+      $values[]=$re["id_permission"];
+    }
+    foreach($list_permissions as $row){
+      $output["id_permission"]=$row["id_permission"];
+      $output["name"]=$row["name"];
+      $sw = in_array($row['id_permission'],$values) ? 'checked':'';
+            echo '<li><input type="checkbox" '.$sw.' name="permission[]" value="'.$row["id_permission"].'">'.$row["name"].'</li>';
+    }
+    break;
   }
-
-
 ?>

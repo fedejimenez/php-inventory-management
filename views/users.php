@@ -124,8 +124,17 @@
               <option value="1" selected>Active</option>
               <option value="0">Inactive</option>
             </select>
-            <br>
-        
+            <br><br>
+
+            <!-- PERMISSIONS-->
+            <div class="form-group">
+              <label for="" class="col-lg-1 control-label">Permissions</label>
+              <div class="col-lg-6">
+                <ul style="list-style:none;" id="permissions">
+                </ul>
+              </div>
+            </div>
+           <!--end Permissions-->
           </div>
 
           <div class="modal-footer">

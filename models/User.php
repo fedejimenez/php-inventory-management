@@ -47,6 +47,26 @@
             $_SESSION["lastname"] = $result["lastname"];
             $_SESSION["user"] = $result["user"];
             
+            // =========== USERS PERMISSIONS  ======================
+            require_once("User.php");
+            $user = new User();
+            $marks = $user->list_permissions_by_user($result["id_user"]);
+            //print_r($marks);
+            $values=array();
+            foreach($marks as $row){
+              $values[]= $row["id_permission"];
+            }
+            in_array(1,$values)?$_SESSION['categories']=1:$_SESSION['categories']=0;
+            in_array(2,$values)?$_SESSION['products']=1:$_SESSION['products']=0;
+            in_array(3,$values)?$_SESSION['suppliers']=1:$_SESSION['suppliers']=0;
+            in_array(4,$values)?$_SESSION['purchases']=1:$_SESSION['purchases']=0;
+            in_array(5,$values)?$_SESSION['clients']=1:$_SESSION['clients']=0;
+            in_array(6,$values)?$_SESSION['sales']=1:$_SESSION['sales']=0;
+            in_array(7,$values)?$_SESSION['purchases_reports']=1:$_SESSION['purchases_reports']=0;
+            in_array(8,$values)?$_SESSION['sales_reports']=1:$_SESSION['sales_reports']=0;
+            in_array(9,$values)?$_SESSION['users']=1:$_SESSION['users']=0;
+            in_array(10,$values)?$_SESSION['company']=1:$_SESSION['company']=0;
+                        
             // access and go to home
             header("Location:".Connect::route()."views/home.php");
             exit();
@@ -98,6 +118,20 @@
       $sql->execute();
 
       // print_r($_POST);
+
+      $id_user = $connect->lastInsertId();
+      //inser permissions
+      $permissions= $_POST["permission"];
+      $num_elements=0;
+      while($num_elements<count($permissions)){
+        $sql_detail= "insert into user_permission
+          values(null,?,?)";
+        $sql_detail=$connect->prepare($sql_detail);
+        $sql_detail->bindValue(1, $id_user);
+        $sql_detail->bindValue(2, $permissions[$num_elements]);
+        $sql_detail->execute();
+        $num_elements=$num_elements+1;
+      }    
     }   
 
     // edit user
@@ -105,42 +139,108 @@
       
       $connect = parent::connection();
       parent::set_names();
-      
-      $sql="update users set
-            name = ?,
-            lastname = ?,
-            idnumber = ?,
-            phone = ?,
-            email = ?,
-            address = ?,
-            role = ?,
-            user = ?,
-            password = ?,
-            password2 = ?,
-            status = ?
-            
-            where id_user = ?
-           ";
 
-      $sql=$connect->prepare($sql);
+      require_once("User.php");
+      $users= new User();
+      // check if user has associated purchases
+      $user_purchases=$users->get_user_by_id_purchases($_POST["id_user"]);
+      // check if user has associated sales
+      $user_sales=$users->get_user_by_id_sales($_POST["id_user"]);
 
-      $sql->bindValue(1, $_POST["name"]);  
-      $sql->bindValue(2, $_POST["lastname"]);  
-      $sql->bindValue(3, $_POST["idnumber"]);  
-      $sql->bindValue(4, $_POST["phone"]);  
-      $sql->bindValue(5, $_POST["email"]);  
-      $sql->bindValue(6, $_POST["address"]);  
-      $sql->bindValue(7, $_POST["role"]);  
-      $sql->bindValue(8, $_POST["user"]);  
-      $sql->bindValue(9, $_POST["password"]);  
-      $sql->bindValue(10, $_POST["password2"]);  
-      $sql->bindValue(11, $_POST["status"]);  
-      $sql->bindValue(12, $_POST["id_user"]);  
-      
-      $sql->execute();
+      if(is_array($user_purchases)==true and count($user_purchases)==0 and is_array($user_sales)==true and count($user_sales)==0){
+        $sql="update users set
+              name = ?,
+              lastname = ?,
+              idnumber = ?,
+              phone = ?,
+              email = ?,
+              address = ?,
+              role = ?,
+              user = ?,
+              password = ?,
+              password2 = ?,
+              status = ?
+              
+              where id_user = ?
+             ";
 
-      // print_r($_POST);
-      
+        $sql=$connect->prepare($sql);
+
+        $sql->bindValue(1, $_POST["name"]);  
+        $sql->bindValue(2, $_POST["lastname"]);  
+        $sql->bindValue(3, $_POST["idnumber"]);  
+        $sql->bindValue(4, $_POST["phone"]);  
+        $sql->bindValue(5, $_POST["email"]);  
+        $sql->bindValue(6, $_POST["address"]);  
+        $sql->bindValue(7, $_POST["role"]);  
+        $sql->bindValue(8, $_POST["user"]);  
+        $sql->bindValue(9, $_POST["password"]);  
+        $sql->bindValue(10, $_POST["password2"]);  
+        $sql->bindValue(11, $_POST["status"]);  
+        $sql->bindValue(12, $_POST["id_user"]);  
+        
+        $sql->execute();
+        
+        // delete permissions when submiting 
+        $sql_delete="delete from user_permission where id_user=?";
+        $sql_delete=$connect->prepare($sql_delete);
+        $sql_delete->bindValue(1,$_POST["id_user"]);
+        $sql_delete->execute();
+        $permissions= $_POST["permission"];
+        // print_r($_POST);
+        $num_elements=0;
+        while($num_elements<count($permissions)){
+          $sql_detail= "insert into user_permission
+          values(null,?,?)";
+            $sql_detail=$connect->prepare($sql_detail);
+            $sql_detail->bindValue(1, $_POST["id_user"]);
+            $sql_detail->bindValue(2, $permissions[$num_elements]);
+            $sql_detail->execute();
+            $num_elements=$num_elements+1;
+        }  
+      } else{
+          $sql="update users set 
+            phone=?,
+            email=?,
+            address=?,
+            role=?,
+            user=?,
+            password=?,
+            password2=?,
+            status=?
+            where 
+            id_user=?
+          ";
+         //echo $sql; exit();
+          $sql=$connect->prepare($sql);
+          $sql->bindValue(1,$_POST["phone"]);
+          $sql->bindValue(2,$_POST["email"]);
+          $sql->bindValue(3,$_POST["address"]);
+          $sql->bindValue(4,$_POST["role"]);
+          $sql->bindValue(5,$_POST["user"]);
+          $sql->bindValue(6,$_POST["password1"]);
+          $sql->bindValue(7,$_POST["password2"]);
+          $sql->bindValue(8,$_POST["status"]);
+          $sql->bindValue(9,$_POST["id_user"]);
+          $sql->execute();
+          $sql_delete="delete from user_permission where id_user=?";
+          $sql_delete=$connect->prepare($sql_delete);
+          $sql_delete->bindValue(1,$_POST["id_user"]);
+          $sql_delete->execute();
+          //$resultado=$sql_delete->fetchAll();
+          $permissions= $_POST["permission"];
+          //print_r($_POST);
+          $num_elements=0;
+          while($num_elements<count($permissions)){
+            $sql_detail= "insert into user_permission
+            values(null,?,?)";
+            $sql_detail=$connect->prepare($sql_detail);
+            $sql_detail->bindValue(1, $_POST["id_user"]);
+            $sql_detail->bindValue(2, $permissions[$num_elements]);
+            $sql_detail->execute();
+            $num_elements=$num_elements+1;
+          }  //end while
+      }// end else
     }
 
     // get user details
@@ -227,6 +327,32 @@
       $sql->bindValue(1,$id_user);
       $sql->execute();
       return $result=$sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function permissions(){
+      $connect=parent::connection();
+      $sql="select * from permissions;";
+      $sql=$connect->prepare($sql);
+      $sql->execute();
+      return $result=$sql->fetchAll();
+    } 
+
+    public function list_permissions_by_user($id_user){
+      $connect=parent::connection();
+      $sql="select * from user_permission where id_user=?";
+      $sql=$connect->prepare($sql);
+      $sql->bindValue(1, $id_user);
+      $sql->execute();
+      return $result=$sql->fetchAll();
+    }
+
+    public function get_user_permission_by_id_user($id_user){
+      $connect= parent::connection();
+      $sql="select * from user_permission where id_user=?";
+      $sql=$connect->prepare($sql);
+      $sql->bindValue(1, $id_user);
+      $sql->execute();
+      return $result= $sql->fetchAll(PDO::FETCH_ASSOC);
     }
   } 
 
