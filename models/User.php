@@ -218,7 +218,7 @@
           $sql->bindValue(3,$_POST["address"]);
           $sql->bindValue(4,$_POST["role"]);
           $sql->bindValue(5,$_POST["user"]);
-          $sql->bindValue(6,$_POST["password1"]);
+          $sql->bindValue(6,$_POST["password"]);
           $sql->bindValue(7,$_POST["password2"]);
           $sql->bindValue(8,$_POST["status"]);
           $sql->bindValue(9,$_POST["id_user"]);

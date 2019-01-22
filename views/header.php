@@ -1,4 +1,10 @@
-<?php  
+<?php
+  // check if session already exists   
+  if(strlen(session_id()) < 1){
+    session_start();
+  }
+
+
   require_once("../config/connection.php");
 
   if (isset($_SESSION["id_user"])) {
@@ -162,113 +168,138 @@
           </a>
         </li>
 
-         <li class="">
-          <a href="categories.php">
-            <i class="fa fa-list" aria-hidden="true"></i> <span>Categories</span>
-            <span class="pull-right-container badge bg-blue">
-              <i class="fa fa-bell pull-right"><?php echo $category-> get_rows_categories() ?></i>
-            </span>
-          </a>
-        </li>
+        <?php if($_SESSION["categories"]==1){
+          echo '<li class="">
+            <a href="categories.php">
+              <i class="fa fa-list" aria-hidden="true"></i> <span>Categories</span>
+              <span class="pull-right-container badge bg-blue">
+                <i class="fa fa-bell pull-right">'.$category-> get_rows_categories().'</i>
+              </span>
+            </a>
+          </li>';
+          }
+        ?>
 
-         <li class="">
-          <a href="products.php">
-            <i class="fa fa-tasks" aria-hidden="true"></i> <span>Products</span>
-            <span class="pull-right-container badge bg-blue">
-              <i class="fa fa-bell pull-right"><?php echo $product-> get_rows_products() ?></i>
-            </span>
-          </a>
-        </li>
+        <?php if($_SESSION["products"]==1){
+          echo '<li class="">
+            <a href="products.php">
+              <i class="fa fa-tasks" aria-hidden="true"></i> <span>Products</span>
+              <span class="pull-right-container badge bg-blue">
+                <i class="fa fa-bell pull-right">'.$product-> get_rows_products().'</i>
+              </span>
+            </a>
+          </li>';
+          }
+        ?>
 
-         <li class="">
+        <?php if($_SESSION["suppliers"]==1){
+          echo '<li class="">
             <a href="suppliers.php">
               <i class="fa fa-users"></i> <span>Suppliers</span>
               <span class="pull-right-container badge bg-blue">
-                <i class="fa fa-bell pull-right"><?php echo $supplier-> get_rows_suppliers() ?></i>
+                <i class="fa fa-bell pull-right">'.$supplier-> get_rows_suppliers().'</i>
               </span>
             </a>
-          </li>
+          </li>';
+          }
+        ?>
 
-           <li class="treeview">
-          <a href="purchases.php">
-            <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span>Purchases</span>
-            <span class="pull-right-container badge bg-blue">
-              <i class="fa fa-bell pull-right"><?php echo $purchase-> get_rows_purchases() ?></i>
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="purchases.php"><i class="fa fa-circle-o"></i>New Purchase</a></li>
-            <li><a href="show_purchases.php"><i class="fa fa-circle-o"></i>Show Purchases</a></li>
-            <li><a href="search_purchases_date.php"><i class="fa fa-circle-o"></i>Search Purchases by Date</a></li>
-            <li><a href="search_purchases_month.php"><i class="fa fa-circle-o"></i>Search Purchases by Month</a></li>
-          </ul> 
-        </li>
+        <?php if($_SESSION["purchases"]==1){
+          echo '<li class="treeview">
+            <a href="purchases.php">
+              <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span>Purchases</span>
+              <span class="pull-right-container badge bg-blue">
+                <i class="fa fa-bell pull-right">'.$purchase-> get_rows_purchases().'</i>
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="purchases.php"><i class="fa fa-circle-o"></i>New Purchase</a></li>
+              <li><a href="show_purchases.php"><i class="fa fa-circle-o"></i>Show Purchases</a></li>
+              <li><a href="search_purchases_date.php"><i class="fa fa-circle-o"></i>Search Purchases by Date</a></li>
+              <li><a href="search_purchases_month.php"><i class="fa fa-circle-o"></i>Search Purchases by Month</a></li>
+            </ul> 
+          </li>';
+          }
+        ?>
 
-           <li class="">
-          <a href="clients.php">
-            <i class="fa fa-users"></i> <span>Clients</span>
-            <span class="pull-right-container badge bg-blue">
-              <i class="fa fa-bell pull-right"><?php echo $client-> get_rows_clients() ?></i>
-            </span>
-          </a>
-        </li>
+         <?php if($_SESSION["clients"]==1){ 
+            echo '<li class="">
+              <a href="clients.php">
+                <i class="fa fa-users"></i> <span>Clients</span>
+                <span class="pull-right-container badge bg-blue">
+                  <i class="fa fa-bell pull-right">'.$client-> get_rows_clients().'</i>
+                </span>
+              </a>
+            </li>';
+            }
+          ?>
 
-         <li class="treeview">
-          <a href="sales.php">
-            <i class="fa fa-suitcase" aria-hidden="true"></i> <span>Sales</span>
-            <span class="pull-right-container badge bg-blue">
-              <i class="fa fa-bell pull-right"><?php echo $sale-> get_rows_sales() ?></i>
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="sales.php"><i class="fa fa-circle-o"></i>New Sale</a></li>
-            <li><a href="show_sales.php"><i class="fa fa-circle-o"></i>Show Sales</a></li>
-            <li><a href="search_sales_date.php"><i class="fa fa-circle-o"></i>Search Sales by Date</a></li>
-            <li><a href="search_sales_month.php"><i class="fa fa-circle-o"></i>Saerch Sales by Month</a></li>
-          </ul> 
-        </li>
+          <?php if($_SESSION["sales"]==1){ 
+            echo '<li class="treeview">
+              <a href="sales.php">
+                <i class="fa fa-suitcase" aria-hidden="true"></i> <span>Sales</span>
+                <span class="pull-right-container badge bg-blue">
+                  <i class="fa fa-bell pull-right">'.$sale-> get_rows_sales().'</i>
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="sales.php"><i class="fa fa-circle-o"></i>New Sale</a></li>
+                <li><a href="show_sales.php"><i class="fa fa-circle-o"></i>Show Sales</a></li>
+                <li><a href="search_sales_date.php"><i class="fa fa-circle-o"></i>Search Sales by Date</a></li>
+                <li><a href="search_sales_month.php"><i class="fa fa-circle-o"></i>Saerch Sales by Month</a></li>
+              </ul> 
+            </li>';
+            }
+          ?>
+       <?php if($_SESSION["purchases_reports"]==1){ 
+          echo '<li class="treeview">
+            <a href="purchases_report.php">
+              <i class="fa fa-bar-chart" aria-hidden="true"></i> <span> Reports - Purchases</span>
+              <span class="pull-right-container badge bg-blue">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="report_general_purchases.php"><i class="fa fa-circle-o"></i>Resume</a></li>
+              <li><a href="report_monthly_purchases.php"><i class="fa fa-circle-o"></i>By Month</a></li>
+              <li><a href="report_supplier_purchases.php"><i class="fa fa-circle-o"></i>By Supplier</a></li>
+            </ul> 
+          </li>';
+          }
+        ?>
+           
+        <?php if($_SESSION["sales_reports"]==1){ 
+            echo '<li class="treeview">
+              <a href="sales_report.php">
+                <i class="fa fa-pie-chart" aria-hidden="true"></i> <span> Reports - Sales</span>
+                <span class="pull-right-container badge bg-blue">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="report_general_sales.php"><i class="fa fa-circle-o"></i>Resume</a></li>
+                <li><a href="report_monthly_sales.php"><i class="fa fa-circle-o"></i>By Month</a></li>
+                <li><a href="report_sales_client.php"><i class="fa fa-circle-o"></i>By Client</a></li>
+              </ul> 
+            </li>';
+          }
+        ?>
 
-        <li class="treeview">
-          <a href="purchases_report.php">
-            <i class="fa fa-bar-chart" aria-hidden="true"></i> <span> Reports - Purchases</span>
-            <span class="pull-right-container badge bg-blue">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="report_general_purchases.php"><i class="fa fa-circle-o"></i>Resume</a></li>
-            <li><a href="report_monthly_purchases.php"><i class="fa fa-circle-o"></i>By Month</a></li>
-            <li><a href="report_supplier_purchases.php"><i class="fa fa-circle-o"></i>By Supplier</a></li>
-          </ul> 
-        </li>
+       <?php if($_SESSION["users"]==1){
+          echo '<li class="">
+              <a href="users.php">
+                <i class="fa fa-user" aria-hidden="true"></i> <span>Users</span>
+                <span class="pull-right-container badge bg-blue">
+                  <i class="fa fa-bell pull-right">'.$user-> get_rows_users().'</i>
+                </span>
+              </a>
+            </li>';
+          }
+        ?>
 
-        <li class="treeview">
-          <a href="sales_report.php">
-            <i class="fa fa-pie-chart" aria-hidden="true"></i> <span> Reports - Sales</span>
-            <span class="pull-right-container badge bg-blue">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="report_general_sales.php"><i class="fa fa-circle-o"></i>Resume</a></li>
-            <li><a href="report_monthly_sales.php"><i class="fa fa-circle-o"></i>By Month</a></li>
-            <li><a href="report_sales_client.php"><i class="fa fa-circle-o"></i>By Client</a></li>
-          </ul> 
-        </li>
-
-
-        <li class="">
-          <a href="users.php">
-            <i class="fa fa-user" aria-hidden="true"></i> <span>Users</span>
-            <span class="pull-right-container badge bg-blue">
-              <i class="fa fa-bell pull-right"><?php echo $user-> get_rows_users() ?></i>
-            </span>
-          </a>
-        </li>
-
-<!--          <li class="">
+        <!-- <li class="">
           <a href="backup.php">
             <i class="fa fa-database" aria-hidden="true"></i> <span>BackUp</span>
             <span class="pull-right-container badge bg-blue">
@@ -277,11 +308,14 @@
           </a>
         </li> -->
 
-         <li class="">
-          <a href="" onclick="show_company(<?php echo $_SESSION["id_user"]?>)" data-toggle="modal" data-target="#companyModal">
-            <i class="fa fa-building" aria-hidden="true"></i> <span>Company</span>
-          </a>
-        </li>
+        <?php if($_SESSION["company"]==1){ 
+            echo '<li class="">
+              <a href="" onclick="show_company('.$_SESSION["id_user"].')" data-toggle="modal" data-target="#companyModal">
+                <i class="fa fa-building" aria-hidden="true"></i> <span>Company</span>
+              </a>
+            </li>';
+          }
+        ?>
 
       </ul>
     </section>
