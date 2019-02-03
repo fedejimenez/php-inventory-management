@@ -11,6 +11,12 @@
   require_once("header.php");
 
 ?>
+
+  <!-- check if user has access -->
+  <?php
+    if ($_SESSION["categories"] == 1) {
+
+   ?>
   <!--Container-->
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">        
@@ -93,7 +99,16 @@
         </div>
       </form>
     </div>
-  </div>
+  </div> 
+  <!-- END MODAL -->
+
+<!-- if user has no permission -->
+<?php 
+ } else {
+    require("noaccess.php");
+ }
+?>
+
 <?php
 
   require_once("footer.php");

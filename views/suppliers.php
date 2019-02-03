@@ -8,6 +8,12 @@
 <?php
   require_once("header.php");
 ?>
+
+  <!-- check if user has permission -->
+  <?php
+    if ($_SESSION["suppliers"] == 1) {
+
+   ?>
   <!--Content-->
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">        
@@ -133,6 +139,13 @@
     </div>
   </div>
   <!--END MODAL FORM-->
+
+<!-- if user has no permission -->
+<?php 
+ } else {
+    require("noaccess.php");
+ }
+?>
 
 <?php
 

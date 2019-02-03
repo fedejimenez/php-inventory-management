@@ -9,6 +9,12 @@
 <?php
   require_once("header.php");
 ?>
+
+<!-- check if user has permission -->
+<?php
+  if ($_SESSION["clients"] == 1) {
+
+ ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">        
   <!-- Main content -->
@@ -131,6 +137,13 @@
   </div>
 </div>
  <!--END MODAL FORM-->
+
+<!-- if user has no permission -->
+<?php 
+  } else {
+    require("noaccess.php");
+  }
+?>
 
 <?php
   require_once("footer.php");

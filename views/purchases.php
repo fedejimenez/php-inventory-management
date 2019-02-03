@@ -8,7 +8,15 @@
 ?>
 
 
-<?php require_once("header.php");?>
+<?php 
+  require_once("header.php");
+?>
+
+  <!-- check if user has permission -->
+  <?php
+    if ($_SESSION["purchases"] == 1) {
+
+   ?>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -205,9 +213,24 @@
   <!-- /.content-wrapper -->
   <!--END CONTENT-->
 
-  <?php require_once("modal/suppliers_list_modal.php");?>
-  <?php require_once("modal/products_list_modal.php");?>
-  <?php require_once("footer.php");?>
+  <?php 
+    require_once("modal/suppliers_list_modal.php");
+  ?>
+  
+  <?php 
+    require_once("modal/products_list_modal.php");
+  ?>
+  
+  <!-- if user has no permission -->
+  <?php 
+    } else {
+      require("noaccess.php");
+    }
+  ?>
+  
+  <?php 
+    require_once("footer.php");
+  ?>
 
   <!--AJAX SUPPLIERS-->
   <script type="text/javascript" src="js/supplier.js"></script>

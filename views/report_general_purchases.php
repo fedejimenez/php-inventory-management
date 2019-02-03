@@ -9,6 +9,13 @@
 ?>
 
 <?php require_once("header.php");?>
+
+  <!-- check if user has permission -->
+  <?php
+    if ($_SESSION["purchases_reports"] == 1) {
+
+  ?>
+
   <div class="content-wrapper">
     <h2 class="report_purchases_general container-fluid bg-red text-white col-lg-12 text-center mh-50">
         PURCHASES REPORT - MONTH / YEAR
@@ -139,6 +146,13 @@
     </div><!--end row-->
   </div>
   <!-- /.content-wrapper -->
+
+  <!-- if user has no permission -->
+  <?php 
+    } else {
+      require("noaccess.php");
+    }
+  ?>  
   
   <?php require_once("footer.php");?>
   
