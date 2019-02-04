@@ -10,23 +10,22 @@ class Connect{
     try {
       // $connect = $this->dbh = new PDO("mysql:local=localhost;dbname=dbphpsystem", "root", "root");
       //Get Heroku ClearDB connection information
-      $dbstr = getenv('CLEARDB_DATABASE_URL');
-      $dbstr = substr("$dbstr", 8);
-      $dbstrarruser = explode(":", $dbstr);
-      //Please don't look at these names. Yes I know that this is a little bit trash :D
-      $dbstrarrhost = explode("@", $dbstrarruser[1]);
-      $dbstrarrrecon = explode("?", $dbstrarrhost[1]);
-      $dbstrarrport = explode("/", $dbstrarrrecon[0]);
-      $dbpassword = $dbstrarrhost[0];
-      $dbhost = $dbstrarrport[0];
-      $dbport = $dbstrarrport[0];
-      $dbuser = $dbstrarruser[0];
-      $dbname = $dbstrarrport[1];
-      unset($dbstrarrrecon);
-      unset($dbstrarrport);
-      unset($dbstrarruser);
-      unset($dbstrarrhost);
-      unset($dbstr);
+      // $dbstr = getenv('CLEARDB_DATABASE_URL');
+      // $dbstr = substr("$dbstr", 8);
+      // $dbstrarruser = explode(":", $dbstr);
+      // $dbstrarrhost = explode("@", $dbstrarruser[1]);
+      // $dbstrarrrecon = explode("?", $dbstrarrhost[1]);
+      // $dbstrarrport = explode("/", $dbstrarrrecon[0]);
+      // $dbpassword = $dbstrarrhost[0];
+      // $dbhost = $dbstrarrport[0];
+      // $dbport = $dbstrarrport[0];
+      // $dbuser = $dbstrarruser[0];
+      // $dbname = $dbstrarrport[1];
+      // unset($dbstrarrrecon);
+      // unset($dbstrarrport);
+      // unset($dbstrarruser);
+      // unset($dbstrarrhost);
+      // unset($dbstr);
       //Uncomment this for debug reasons
       // echo $dbname . " - name<br>";
       // echo $dbhost . " - host<br>";
@@ -34,9 +33,18 @@ class Connect{
       // echo $dbuser . " - user<br>";
       // echo $dbpassword . " - passwd<br>";
       
-      $dbanfang = 'mysql:host=' . $dbhost . ';dbname=' . $dbname;
-      $connect = $this->dbh = new PDO($dbanfang, $dbuser, $dbpassword);
-      //You can only use this with the standard port!
+      // $dbanfang = 'mysql:host=' . $dbhost . ';dbname=' . $dbname;
+      // $connect = $this->dbh = new PDO($dbanfang, $dbuser, $dbpassword);
+
+      
+      $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+      $server = $url["host"];
+      $username = $url["user"];
+      $password = $url["pass"];
+      $db = substr($url["path"], 1);
+
+      $dbstart = 'mysql:host=' . $server . ';dbname=' . $db;
+      $connect = $this->dbh = new PDO($dbstart, $username, $password);
       return $connect;
     
     } catch (Exception $e) {
