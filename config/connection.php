@@ -28,11 +28,11 @@ class Connect{
       unset($dbstrarrhost);
       unset($dbstr);
       //Uncomment this for debug reasons
-      echo $dbname . " - name<br>";
-      echo $dbhost . " - host<br>";
-      echo $dbport . " - port<br>";
-      echo $dbuser . " - user<br>";
-      echo $dbpassword . " - passwd<br>";
+      // echo $dbname . " - name<br>";
+      // echo $dbhost . " - host<br>";
+      // echo $dbport . " - port<br>";
+      // echo $dbuser . " - user<br>";
+      // echo $dbpassword . " - passwd<br>";
       
       $dbanfang = 'mysql:host=' . $dbhost . ';dbname=' . $dbname;
       $connect = new PDO($dbanfang, $dbuser, $dbpassword);
