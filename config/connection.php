@@ -15,7 +15,7 @@ class Connect{
       $password = $url["pass"];
       $db = substr($url["path"], 1);
 
-      $config = array(
+      $connect = array(
           'host' => $server ,
           'user' => $username ,
           'pw' => $password,
