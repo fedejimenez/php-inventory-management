@@ -112,14 +112,23 @@
       </div>
     </form>
 
-   
 
     <!--<a href="#">I forgot my password</a><br>-->
-  
-
-
   </div>
   <!-- /.login-box-body -->
+
+  <br><br>
+  <div class="login-box-body">
+    <h5>Test User:</h5>
+    <ul>
+      <li>
+        <h6>Email: test@test.com</h6>
+      </li>
+      <li>
+        <h6>Password: Test1234!</h6>
+      </li>
+    </ul>
+  </div>
 
 </div>
 <!-- /.login-box -->

@@ -10,32 +10,6 @@ class Connect{
     try {
       // $connect = $this->dbh = new PDO("mysql:local=localhost;dbname=dbphpsystem", "root", "root");
       //Get Heroku ClearDB connection information
-      // $dbstr = getenv('CLEARDB_DATABASE_URL');
-      // $dbstr = substr("$dbstr", 8);
-      // $dbstrarruser = explode(":", $dbstr);
-      // $dbstrarrhost = explode("@", $dbstrarruser[1]);
-      // $dbstrarrrecon = explode("?", $dbstrarrhost[1]);
-      // $dbstrarrport = explode("/", $dbstrarrrecon[0]);
-      // $dbpassword = $dbstrarrhost[0];
-      // $dbhost = $dbstrarrport[0];
-      // $dbport = $dbstrarrport[0];
-      // $dbuser = $dbstrarruser[0];
-      // $dbname = $dbstrarrport[1];
-      // unset($dbstrarrrecon);
-      // unset($dbstrarrport);
-      // unset($dbstrarruser);
-      // unset($dbstrarrhost);
-      // unset($dbstr);
-      //Uncomment this for debug reasons
-      // echo $dbname . " - name<br>";
-      // echo $dbhost . " - host<br>";
-      // echo $dbport . " - port<br>";
-      // echo $dbuser . " - user<br>";
-      // echo $dbpassword . " - passwd<br>";
-      
-      // $dbanfang = 'mysql:host=' . $dbhost . ';dbname=' . $dbname;
-      // $connect = $this->dbh = new PDO($dbanfang, $dbuser, $dbpassword);
-
       
       $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
       $server = $url["host"];
@@ -68,6 +42,7 @@ class Connect{
 
   public function route(){
     return "https://purchases-sales-system.herokuapp.com/";
+    // return "http://localhost/projects/phpsystem/";
   }
 
 
