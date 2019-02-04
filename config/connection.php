@@ -35,7 +35,7 @@ class Connect{
       // echo $dbpassword . " - passwd<br>";
       
       $dbanfang = 'mysql:host=' . $dbhost . ';dbname=' . $dbname;
-      $connect = new PDO($dbanfang, $dbuser, $dbpassword);
+      $connect = $this->dbh = new PDO($dbanfang, $dbuser, $dbpassword);
       //You can only use this with the standard port!
       return $connect;
     
