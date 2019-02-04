@@ -59,7 +59,7 @@ class Connect{
   }
 
   public function route(){
-    return "http://localhost/projects/phpsystem/";
+    return "https://purchases-sales-system.herokuapp.com/";
   }
 
 
